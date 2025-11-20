@@ -1,0 +1,103 @@
+{
+    "name": "Groudon",
+    "id": "0383",
+    "can_evolve": true,
+    "forms": [
+        {
+            "name": "Groudon",
+            "value": "0",
+            "descriptions": {
+                "version_x": "Groudon is said to be the personification of the land itself. Legends tell of its many clashes against Kyogre, as each sought to gain the power of nature.",
+                "version_y": "Through Primal Reversion and with nature\u2019s full power, it will take back its true form. It can cause magma to erupt and expand the landmass of the world."
+            },
+            "height": "3.5 m",
+            "weight": "950.0 kg",
+            "gender": "Unknown",
+            "image_url": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/383.png",
+            "types": [
+                "Ground"
+            ],
+            "weaknesses": {
+                "4x": [],
+                "2x": [
+                    "Water",
+                    "Grass",
+                    "Ice"
+                ]
+            },
+            "stats": {
+                "HP": 6,
+                "Attack": 9,
+                "Defense": 9,
+                "Special Attack": 6,
+                "Special Defense": 6,
+                "Speed": 6
+            },
+            "abilities": [
+                {
+                    "name": "Drought",
+                    "description": "Turns the sunlight harsh when the Pok\u00e9mon enters a battle."
+                },
+                {
+                    "name": "Desolate Land",
+                    "description": "The Pok\u00e9mon changes the weather to nullify Water-type attacks."
+                }
+            ]
+        },
+        {
+            "name": "Primal Reversion",
+            "value": "1",
+            "descriptions": {
+                "version_x": "Groudon is said to be the personification of the land itself. Legends tell of its many clashes against Kyogre, as each sought to gain the power of nature.",
+                "version_y": "Through Primal Reversion and with nature\u2019s full power, it will take back its true form. It can cause magma to erupt and expand the landmass of the world."
+            },
+            "height": "5.0 m",
+            "weight": "999.7 kg",
+            "gender": "Unknown",
+            "image_url": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/383_f2.png",
+            "types": [
+                "Ground",
+                "Fire"
+            ],
+            "weaknesses": {
+                "4x": [
+                    "Water"
+                ],
+                "2x": [
+                    "Ground"
+                ]
+            },
+            "stats": {
+                "HP": 6,
+                "Attack": 11,
+                "Defense": 10,
+                "Special Attack": 9,
+                "Special Defense": 6,
+                "Speed": 6
+            },
+            "abilities": [
+                {
+                    "name": "Drought",
+                    "description": "Turns the sunlight harsh when the Pok\u00e9mon enters a battle."
+                },
+                {
+                    "name": "Desolate Land",
+                    "description": "The Pok\u00e9mon changes the weather to nullify Water-type attacks."
+                }
+            ]
+        }
+    ],
+    "evolution_chain": {
+        "first": {
+            "name": "Groudon",
+            "number": "0383",
+            "image_url": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/383.png",
+            "types": [
+                "Ground"
+            ]
+        },
+        "middle": [],
+        "last": [],
+        "unknown": []
+    }
+}

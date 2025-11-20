@@ -1,0 +1,3086 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/d-Headiction-our-How-and-ther-Lord-That-manly-sp" async></script>
+        <title>Pokédex | Pokemon.com</title>
+
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-V9L7');</script>
+<!-- End Google Tag Manager -->
+
+
+<link rel="shortcut icon" href="https://assets.pokemon.com/static2/_ui/img/favicon.ico"/>
+<link rel="stylesheet" href="https://assets.pokemon.com/static2/_ui/css/main.css"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css" />
+
+<script src="https://assets.pokemon.com/static2/_ui/js/vendor/modernizr.custom.js"></script>
+    <script src="https://www.recaptcha.net/recaptcha/enterprise.js?render=6Lc4P0MoAAAAAAhyCYBhoVfHZUF3HMvFdXSRZ-kO&hl=en"></script>
+
+
+<script>
+    // TODO: this should be moved to a better place in the application
+    // needed for image deferred loading in sliders
+    window.addEventListener('load', function () {
+        window.loaded = true;
+    });
+</script>
+
+
+<script>
+    window.token = "4irb2DZnTqszXC3dKKW48KmSgGELh60QcW3VrBbRAo5bgwFIfDdCFypAvQvwR2SK";
+    window.mockAPI = false;
+    window.loginURL = '/us/pokemon-trainer-club/login';
+    window.pokemonUI = window.pokemonUI || {};
+
+
+    window.pokemonUI.recaptcha_key = "6Lc4P0MoAAAAAAhyCYBhoVfHZUF3HMvFdXSRZ-kO";
+    window.pokemonUI.email_signup_api = "https://api.emo.pokemon.com/";
+    window.pokemonUI.countryCode = 'us';
+    window.pokemonUI.api = {
+        'user-details': 'https://www.pokemon.com/api/users/details',
+        'base-url-secure': 'https://www.pokemon.com',
+
+        'gsa': '/us/search/api/'
+
+    };
+
+    window.pokemonUI.config = {
+        'collection': 'production_pokemon_collection'
+    };
+
+    window.pokemonUI.modals = window.pokemonUI.modals || {};
+    window.pokemonUI.modals = {
+        "season": "Season",
+        "episode": "Episode",
+        "legal": "Notice: If you click on the YouTube video above, you will leave Pokemon.com. The Pokémon Company International is not responsible for the content of any linked website that is not operated by The Pokémon Company International. Please note that these websites' privacy policies and security practices may differ from The Pokémon Company International's standards.",
+
+        "twitchlegal": "Notice: If you click on the Twitch video above, you will leave Pokemon.com. The Pokémon Company International is not responsible for the content of any linked website that is not operated by The Pokémon Company International. Please note that these websites' privacy policies and security practices may differ from The Pokémon Company International's standards.",
+    };
+    window.pokemonUI.dictionary = window.pokemonUI.dictionary || {};
+    window.pokemonUI.dictionary.dashboard = {
+        "youRecentlyPurchased": "You Recently Redeemed",
+        "shopMore": "Shop More"
+    };
+    window.pokemonUI.global_dictionary = window.pokemonUI.global_dictionary || {};
+    window.pokemonUI.global_dictionary.search = {
+        'searchUrl': '/us/search/',
+        'GSALanguageCode': 'us',
+        'sortBy': 'Sort by:',
+        'filterBy': 'Filter by:',
+        'selectCategory': 'View All',
+        'mostRelevant': 'Most Relevant',
+        'mostRecent': 'Most Recent',
+        'returnedResults': 'Returned XXXX Results',
+        'recommendedResults': 'Recommended Results',
+        'playGame': 'Play Game',
+        'all': {title: 'View All'},
+        'pokedex': {title: 'Pokédex'},
+        'videogames': {title: 'Video Game'},
+        'tcg': {title: 'Trading Card Game'},
+        'funzone': {title: 'Online Game'},
+        'animation': {title: 'Pokémon TV'},
+        'news': {title: 'News'},
+        'events': {title: 'Events'},
+        'strategy': {title: 'Strategy'},
+
+        "numberPrefix": "#"
+    };
+    window.pokemonUI.global_dictionary.datatables = {
+        'search': 'Search:',
+        'previous': 'Previous',
+        'next': 'Next',
+        'emptyTable': "No data is available.",
+        'zeroRecords': "No matching records found."
+    };
+    window.pokemonUI.global_dictionary.errorMessages = {
+        'dataError': 'Currently unavailable. Please try again.'
+    };
+    window.pokemonUI['ui-path'] = 'https://assets.pokemon.com/static2/_ui/'
+
+    window.pokemonUI.global_api = {
+
+        'gsa': '/us/search/api/',
+
+        'status-indicators': {
+            'game-server-status': '/api/tcg/game_server_status',
+            'tcgo-in-maintenance': '/api/tcg/in_maintenance_status',
+            'notifications': 'https://www.pokemon.com/api/user/notifications/config'
+        }
+    };
+
+    window.pokemonUI.cookie = {
+        set: function (name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            } else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        },
+
+        get: function (name) {
+            var nameEQ = name + '=',
+                ca = document.cookie.split(';'),
+                c, i = 0, ii = 0;
+
+            for (i = 0, ii = ca.length; i < ii; i++) {
+                c = ca[i];
+
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1, c.length);
+                }
+
+                if (c.indexOf(nameEQ) === 0) {
+                    var value = c.substring(nameEQ.length, c.length);
+                    if (value.charAt(0) == '"' && value.charAt(value.length - 1) == '"') {
+                        value = value.substring(1, value.length - 1);
+                    }
+                    return value;
+                }
+            }
+            return null;
+        }
+    };
+
+    window.enableDashboard = true;
+
+</script>
+<link rel="stylesheet" href="https://assets.pokemon.com/static2/_ui/css/gus.css" media="all" type="text/css"/>
+<link rel="stylesheet" href="https://assets.pokemon.com/static2/_ui/css/gus_integration.css"/>
+
+                <link rel="alternate" hreflang="es" href="https://www.pokemon.com/es/pokedex" />
+                <link rel="alternate" hreflang="de" href="https://www.pokemon.com/de/pokedex" />
+                <link rel="alternate" hreflang="fr" href="https://www.pokemon.com/fr/pokedex" />
+                <link rel="alternate" hreflang="en-gb" href="https://www.pokemon.com/uk/pokedex" />
+                <link rel="alternate" hreflang="pt-br" href="https://www.pokemon.com/br/pokedex" />
+                <link rel="alternate" hreflang="es-xl" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-do" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-py" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-cl" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-gt" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-mx" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-hn" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-uy" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-bo" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-ar" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-cr" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-pe" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-co" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-pa" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="es-sv" href="https://www.pokemon.com/el/pokedex" />
+                <link rel="alternate" hreflang="it" href="https://www.pokemon.com/it/pokedex" />
+                <link rel="alternate" hreflang="en" href="https://www.pokemon.com/us/pokedex" />
+
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta http-equiv="Content-Language" content="en"/>
+<meta name="language" content="en"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="twitter:card" content="summary" />
+
+<meta property="og:title" content="The Official Pokémon Website" />
+<meta name="twitter:title" content="The Official Pokémon Website" />
+
+<meta property="og:image" content="https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg" />
+<meta name="twitter:image" content="https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg" />
+
+
+
+    <meta name="description" content="Pokédex" />
+    <meta property="og:description" content="Pokédex" />
+    <meta name="twitter:description" content="Pokédex" />
+    <meta name="pkm-description" content="Pokédex" />
+
+    <meta name="pkm-modified-date" content="20241202" />
+
+    <link rel="canonical" href="https://www.pokemon.com/us/pokedex" />
+
+
+<script>
+    window.pokemonUI.api = window.pokemonUI.api || {};
+    window.pokemonUI.api["user-details"] = "https://www.pokemon.com/api/users/details";
+    window.pokemonUI.api["pokedex"] = "https://www.pokemon.com/us/api/pokedex/";
+    window.pokemonUI.dictionary = window.pokemonUI.dictionary || {};
+    window.pokemonUI.dictionary["show"] = "Show Advanced Search";
+    window.pokemonUI.dictionary["hide"] = "Hide Advanced Search";
+    window.pokemonUI.dictionary["numberPrefix"] = "#";
+    window.pokemonUI.dictionary.type = {
+        "ghost": "Ghost",
+        "dark": "Dark",
+        "electric": "Electric",
+        "normal": "Normal",
+        "fire": "Fire",
+        "psychic": "Psychic",
+        "flying": "Flying",
+        "steel": "Steel",
+        "poison": "Poison",
+        "dragon": "Dragon",
+        "water": "Water",
+        "ice": "Ice",
+        "rock": "Rock",
+        "fighting": "Fighting",
+        "grass": "Grass",
+        "bug": "Bug",
+        "ground": "Ground",
+        "fairy": "Fairy",
+    };
+    window.pokemonUI.dictionary.filters = {
+        "ability": "Ability",
+        "height": "Height",
+        "numrange": "Number Range",
+        "type": "Type",
+        "weakness": "Weakness",
+        "weight": "Weight"
+    }
+</script>
+<script>
+    window.pokemonUI = window.pokemonUI || {};
+    window.pokemonUI.collectibles = window.pokemonUI.collectibles || {};
+    window.pokemonUI.collectibles.toggles = {
+        addToCollection: "Add to My Collection",
+        addToWishlist: "Add to My Wish List",
+        addToTradelist: "Add to My Trade List",
+        friendsHaveThis: "0 friends have this",
+        friendsWantThis: "0 friends want this",
+        friendsTradeThis: "0 friends want to trade this"
+    };
+    window.pokemonUI.collectibles.friends = {
+        tradeWithFriends: "Trade with Friends",
+        canTrade: "You can trade this collectible with these friends:",
+        cannotTrade: "If you add this collectible to your collection, wish list, or trade list, you can trade it with your friends!",
+        noFriends: "None of your friends can trade this with you."
+    };
+    window.pokemonUI.collectibles.compare = {
+        yourCollectibles: "Your Collectibles",
+        friendCollectibles: "Collectibles"
+    };
+    window.pokemonUI.collectibles.search = {
+
+        zeroResults: "No results were found using these filters."
+    }
+</script>
+
+    <link rel="stylesheet" href="https://assets.pokemon.com/static2/_ui/css/pokedex.css" />
+</head>
+
+<body class="us fluid custom-form-elements">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-V9L7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id='gus-wrapper'>
+    <div class="pokemon-gus-container" data-site="pcom" data-locale="en" data-api="/pcom/api/gus/" data-width="913px"></div>
+</div>
+<div class="main-filler"></div>
+
+
+<nav class="main">
+
+    <div class="blocker"></div>
+
+    <div class="content-wrapper">
+
+        <div class="nav-bar">
+            <a href="#" class="nav-toggle"><span
+                    class="icon icon_hamburger"></span></a>
+
+            <ul class="dashboard-open visible-mobile">
+                <li class="visible-signed-in">
+                    <a href="/us/pokemon-trainer-club/login">
+                        <div class="avatar-icon-wrapper">
+                            <img class="avatar-icon avatar-icon-mobile"
+                                 src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-avatar.png"
+                                 alt="View Profile"/>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="visible-not-signed-in">
+                    <a href="/us/pokemon-trainer-club/login">
+                        <div class="avatar-icon-wrapper">
+                            <img class="avatar-icon avatar-icon-mobile"
+                                src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-signup.png"
+                                alt="Log In / Sign Up"/>
+                        </div>
+                        <div class="sign-in-text-wrapper sign-in-text-wrapper-mobile">
+                            Log In
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <ul data-analytics-label="primary-nav">
+
+
+
+
+<li class="home">
+  <a href="/us/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_home">
+
+
+
+    </span>
+
+    <span class="title title_home">Home</span>
+  </a>
+
+
+
+</li>
+
+
+
+<li class="explore">
+  <a href="/us/pokedex/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_pokeball">
+
+
+
+    </span>
+
+    <span class="title title_pokeball">Pokédex</span>
+  </a>
+
+
+
+</li>
+
+
+
+<li class="watch">
+  <a href="/us/pokemon-video-games/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_joystick">
+
+
+
+    </span>
+
+    <span class="title title_joystick">Video Games & Apps</span>
+  </a>
+
+
+
+</li>
+
+
+
+<li class="play">
+  <a href="/us/pokemon-tcg/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_cards">
+
+
+
+    </span>
+
+    <span class="title title_cards">Trading Card Game</span>
+  </a>
+
+
+
+</li>
+
+
+
+<li class="attend">
+  <a href="/us/animation"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_pokemontv">
+
+
+
+    </span>
+
+    <span class="title title_pokemontv">Animation</span>
+  </a>
+
+
+
+</li>
+
+
+
+<li class="trade">
+  <a href="/us/play-pokemon/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_event">
+
+
+
+    </span>
+
+    <span class="title title_event">Play! Pokémon Events</span>
+  </a>
+
+<a href="#" class="subnav-toggle"><span class="icon"></span></a>
+
+<ul class="subnav secondary">
+
+    <li class="subnav-title"
+        data-content-id=""
+        data-content-type="Sidebar"
+        data-content-variation="sidebarLeft"
+        data-content-location=""
+        data-content-category=""
+        data-content-download="">
+        <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+        <a href="#"><span class="title">Play! Pokémon Events</span></a>
+    </li>
+
+
+
+<li>
+    <a href="/us/play-pokemon/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Play! Pokémon Events</a>
+
+    <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+
+<ul class="subnav tertiary">
+
+    <li class="subnav-title"
+        data-content-id=""
+        data-content-type="Sidebar"
+        data-content-variation="sidebarLeft"
+        data-content-location=""
+        data-content-category=""
+        data-content-download="">
+        <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+        <a href="#"><span class="title">Play! Pokémon Events</span></a>
+    </li>
+
+
+
+<li>
+    <a href="/us/play-pokemon/pokemon-events/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Play! Pokémon Events</a>
+
+    <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+
+<ul class="subnav tertiary">
+
+    <li class="subnav-title"
+        data-content-id=""
+        data-content-type="Sidebar"
+        data-content-variation="sidebarLeft"
+        data-content-location=""
+        data-content-category=""
+        data-content-download="">
+        <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+        <a href="#"><span class="title">Play! Pokémon Events</span></a>
+    </li>
+
+
+
+<li>
+    <a href="/us/play-pokemon/pokemon-events/find-an-event/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Event Locator</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/pokemon-events/play-in-a-league/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Pokémon League</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/pokemon-events/pokemon-tournaments/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Pokémon Championship Series</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/pokemon-events/pokemon-tournaments/earn-championship-points/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Championship Points</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/leaderboards/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Championship Rating and Rankings</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/pokemon-events/pre-release-tournaments/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Prerelease Tournaments</a>
+
+
+
+</li>
+
+
+</ul>
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/about/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">About Play! Pokémon</a>
+
+    <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+
+<ul class="subnav tertiary">
+
+    <li class="subnav-title"
+        data-content-id=""
+        data-content-type="Sidebar"
+        data-content-variation="sidebarLeft"
+        data-content-location=""
+        data-content-category=""
+        data-content-download="">
+        <a href="#" class="subnav-toggle"><span class="icon"></span></a>
+        <a href="#"><span class="title">About Play! Pokémon</span></a>
+    </li>
+
+
+
+<li>
+    <a href="/us/play-pokemon/about/play-points/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Play! Points</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/about/tournaments-rules-and-resources/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Rules & Resources</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/about/tournaments-glossary/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Play! Pokémon Glossary</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/about/video-game-glossary/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Video Game Glossary</a>
+
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/about/parents-guide/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Parents Guide</a>
+
+
+
+</li>
+
+
+</ul>
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/organize/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Organize Events</a>
+
+
+
+</li>
+
+
+</ul>
+
+
+</li>
+<li>
+    <a href="/us/play-pokemon/leaderboards/"
+
+
+
+       data-content-id=""
+       data-content-type="Sidebar"
+       data-content-variation="sidebarLeft"
+       data-content-location=""
+       data-content-category=""
+       data-content-download=""
+       target="_self">Play! Pokémon Leaderboards</a>
+
+
+
+</li>
+
+
+</ul>
+
+
+</li>
+
+
+
+<li class="game last-item">
+  <a href="/us/pokemon-news/"
+
+
+
+     target="_self"
+     data-content-id=""
+     data-content-type="Sidebar"
+     data-content-variation="sidebarLeft"
+     data-content-location=""
+     data-content-category=""
+     data-content-download="">
+    <span class="fill"></span>
+
+    <span class="icon icon_news">
+
+
+
+    </span>
+
+    <span class="title title_news">News</span>
+  </a>
+
+
+
+</li>
+
+
+
+    <li class="search">
+        <div class="search-wrapper">
+            <form id="mobile-nav-site-search-widget" action="/search/" method="GET">
+                <input id="mobile-search" type="search" value="" placeholder="Search" name="q"
+                       id="mobile-nav-site-search-widget-term"/>
+                <span class="icon icon_search"></span>
+            </form>
+        </div>
+    </li>
+</ul>
+
+
+
+    </div>
+
+</nav>
+<div id="user-dashboard" class="default-background">
+    <div class="drawer">
+        <nav class="profile-nav hidden-mobile">
+            <ul class="dashboard-open">
+                <li class="visible-not-signed-in sign-up">
+                    <a href="https://club.pokemon.com/us/pokemon-trainer-club/login">
+                        <span class="">
+                            <div class="avatar-icon-wrapper">
+                                <img class="avatar-icon" src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-signup.png"
+                                     alt="Log In"/>
+                            </div>
+                            <div class="sign-in-text-wrapper">
+                                Log In
+                            </div>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="visible-signed-in">
+                    <a href="https://club.pokemon.com/us/pokemon-trainer-club/edit-profile/">
+                        <span class="">
+                            <div class="avatar-icon-wrapper">
+                                <img class="avatar-icon"
+                                     src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-avatar.png"
+                                     alt="Profile"/>
+                            </div>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="visible-signed-in organizer-link">
+                    <a href="/us/pokemon-trainer-club/play-pokemon/events/">
+                            <span class="" >
+                                <div class="organizer-icon-wrapper">
+                                    <img class="organizer-icon default" alt="Profile"
+                                         src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-builder.png" />
+                                    <img class="organizer-icon ie9-hover" alt="Profile"
+                                         src="https://assets.pokemon.com/static2/_ui/img/chrome/profile-navigation/profile-nav-builder-ie9-hover.png" />
+                                    <span class="offscreen">Profile</span>
+                                </div>
+                            </span>
+                    </a>
+                </li>
+
+                <li class="visible-signed-in sign-in" id="sidebar-logout-button">
+                    <a href="/us/pokemon-trainer-club/logout">
+                        <span>Log Out</span>
+                    </a>
+                </li>
+
+            </ul>
+            <div class="search">
+                <a class="icon icon_search" href="">
+                    <span class="offscreen"></span>
+                </a>
+            </div>
+            <div class="bottom-angle"></div>
+        </nav>
+
+        <div class="dashboard"></div>
+
+    </div>
+
+</div>
+
+<div class="container">
+    <section class="section pokedex-header overflow-visible">
+        <div class="column-6 push-1">
+            <h1 class="section-title no-margin no-padding">Pokédex</h1>
+        </div>
+        <div class="column-6 push-7"></div>
+    </section>
+
+    <section class="pokedex-filter">
+
+        <div class="pokedex-filter-header">
+            <div>
+                <div class="column-6 push-1">
+                    <div class="filter-text-search">
+                        <label>Name or Number</label>
+                        <div id="pokedex-search-input-items">
+                            <input data-type="name" type="text" id="searchInput" class="button-white"/>
+                            <input type="submit" class="button button-search" value="Search" id="search"/>
+                        </div>
+                    </div>
+                    <p class="subtitle">Use the Advanced Search to explore Pokémon by type, weakness, Ability, and more!</p>
+                </div>
+                <div class="column-6 push-7">
+                    <div class="content-block content-block-full">
+                        <div id="pokedex-search-banner" class="banner banner-green">
+                            <h2>Search for a Pokémon by name or using its National Pokédex number.</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="simple-filters-wrapper">
+            <ul class="simple-filters hidden-mobile"></ul>
+        </div>
+
+        <div class="pokedex-filter-wrapper overflow-visible">
+
+            <div class="pokedex-filter-wrapper__inner clear">
+
+                <div class="column-7 push-1">
+
+                    <div class="content-block content-block-full">
+
+                        <h2 class="section-title no-padding">
+                            Type &amp; Weakness
+                        </h2>
+
+                        <div class="filter-help">
+                            <span><strong>T</strong> =  Type</span>
+                            <span><strong>W</strong> =  Weakness</span>
+                        </div>
+
+                    </div>
+
+                    <div class="content-block content-block-full">
+                        <ul class="pokedex-filter-tw-list">
+
+                            <li>
+                                <span class="pill background-color-bug">Bug</span>
+                                <span data-type="type" data-value="bug"
+                                      class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="bug"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-dark">Dark</span>
+                                <span data-type="type" data-value="dark"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="dark"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-dragon">Dragon</span>
+                                <span data-type="type" data-value="dragon"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="dragon"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-electric">Electric</span>
+                                <span data-type="type" data-value="electric"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="electric"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-fairy">Fairy</span>
+                                <span data-type="type" data-value="fairy"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="fairy"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-fighting">Fighting</span>
+                                <span data-type="type" data-value="fighting"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="fighting"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-fire">Fire</span>
+                                <span data-type="type" data-value="fire"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="fire"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-flying">Flying</span>
+                                <span data-type="type" data-value="flying"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="flying"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-ghost">Ghost</span>
+                                <span data-type="type" data-value="ghost"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="ghost"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-grass">Grass</span>
+                                <span data-type="type" data-value="grass"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="grass"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-ground">Ground</span>
+                                <span data-type="type" data-value="ground"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="ground"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-ice">Ice</span>
+                                <span data-type="type" data-value="ice"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="ice"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-normal">Normal</span>
+                                <span data-type="type" data-value="normal"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="normal"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-poison">Poison</span>
+                                <span data-type="type" data-value="poison"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="poison"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-psychic">Psychic</span>
+                                <span data-type="type" data-value="psychic"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="psychic"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-rock">Rock</span>
+                                <span data-type="type" data-value="rock"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="rock"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-steel">Steel</span>
+                                <span data-type="type" data-value="steel"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="steel"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                            <li>
+                                <span class="pill background-color-water">Water</span>
+                                <span data-type="type" data-value="water"
+                                       class="filter type-filter toggle type" tabindex="-1">T</span>
+                                <span data-type="weakness" data-value="water"
+                                      class="filter weakness-filter toggle weakness" tabindex="-1">W</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="content-block content-block-full">
+                        <div class="range-filter-wrapper">
+                            <h3 class="rangeTitle">Number Range</h3>
+                            <div id="range-boxes" data-type="number">
+                                <input id="minRangeBox" type="text" class="range-box button-white tt-query" value="1" tabindex="-1">
+                                <span style="padding: 0 10px;">-</span>
+                                <input id="maxRangeBox" type="text" value="1025" class="range-box button-white tt-query" tabindex="-1">
+                            </div>
+                            <p class="rangeValues" style="display: none;">
+                                <span id="min">1</span> - <span id="max">1025</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="column-5 push-8">
+
+                    <div class="content-block content-block-full abilities-filter">
+
+                        <h3 class="section-title pokedex-filter-title">Ability</h3>
+
+                        <div class="styled-select button-black icon icon_pokeball">
+                            <select id="abilities" data-type="abilities" data-height="300">
+                                <option value="All">All</option>
+                                    <option value="Adaptability">Adaptability</option>
+                                    <option value="Aerilate">Aerilate</option>
+                                    <option value="Aftermath">Aftermath</option>
+                                    <option value="Air Lock">Air Lock</option>
+                                    <option value="Anger Point">Anger Point</option>
+                                    <option value="Anger Shell">Anger Shell</option>
+                                    <option value="Anticipation">Anticipation</option>
+                                    <option value="Arena Trap">Arena Trap</option>
+                                    <option value="Armor Tail">Armor Tail</option>
+                                    <option value="Aroma Veil">Aroma Veil</option>
+                                    <option value="As One">As One</option>
+                                    <option value="Aura Break">Aura Break</option>
+                                    <option value="Bad Dreams">Bad Dreams</option>
+                                    <option value="Ball Fetch">Ball Fetch</option>
+                                    <option value="Battery">Battery</option>
+                                    <option value="Battle Armor">Battle Armor</option>
+                                    <option value="Battle Bond">Battle Bond</option>
+                                    <option value="Beads of Ruin">Beads of Ruin</option>
+                                    <option value="Beast Boost">Beast Boost</option>
+                                    <option value="Berserk">Berserk</option>
+                                    <option value="Big Pecks">Big Pecks</option>
+                                    <option value="Blaze">Blaze</option>
+                                    <option value="Bulletproof">Bulletproof</option>
+                                    <option value="Cheek Pouch">Cheek Pouch</option>
+                                    <option value="Chilling Neigh">Chilling Neigh</option>
+                                    <option value="Chlorophyll">Chlorophyll</option>
+                                    <option value="Clear Body">Clear Body</option>
+                                    <option value="Cloud Nine">Cloud Nine</option>
+                                    <option value="Color Change">Color Change</option>
+                                    <option value="Comatose">Comatose</option>
+                                    <option value="Commander">Commander</option>
+                                    <option value="Competitive">Competitive</option>
+                                    <option value="Compound Eyes">Compound Eyes</option>
+                                    <option value="Contrary">Contrary</option>
+                                    <option value="Corrosion">Corrosion</option>
+                                    <option value="Cotton Down">Cotton Down</option>
+                                    <option value="Cud Chew">Cud Chew</option>
+                                    <option value="Curious Medicine">Curious Medicine</option>
+                                    <option value="Cursed Body">Cursed Body</option>
+                                    <option value="Cute Charm">Cute Charm</option>
+                                    <option value="Damp">Damp</option>
+                                    <option value="Dancer">Dancer</option>
+                                    <option value="Dark Aura">Dark Aura</option>
+                                    <option value="Dauntless Shield">Dauntless Shield</option>
+                                    <option value="Dazzling">Dazzling</option>
+                                    <option value="Defeatist">Defeatist</option>
+                                    <option value="Defiant">Defiant</option>
+                                    <option value="Delta Stream">Delta Stream</option>
+                                    <option value="Desolate Land">Desolate Land</option>
+                                    <option value="Disguise">Disguise</option>
+                                    <option value="Download">Download</option>
+                                    <option value="Dragon’s Maw">Dragon’s Maw</option>
+                                    <option value="Drizzle">Drizzle</option>
+                                    <option value="Drought">Drought</option>
+                                    <option value="Dry Skin">Dry Skin</option>
+                                    <option value="Early Bird">Early Bird</option>
+                                    <option value="Earth Eater">Earth Eater</option>
+                                    <option value="Effect Spore">Effect Spore</option>
+                                    <option value="Electric Surge">Electric Surge</option>
+                                    <option value="Electromorphosis">Electromorphosis</option>
+                                    <option value="Emergency Exit">Emergency Exit</option>
+                                    <option value="Fairy Aura">Fairy Aura</option>
+                                    <option value="Filter">Filter</option>
+                                    <option value="Flame Body">Flame Body</option>
+                                    <option value="Flash Fire">Flash Fire</option>
+                                    <option value="Flower Gift">Flower Gift</option>
+                                    <option value="Flower Veil">Flower Veil</option>
+                                    <option value="Fluffy">Fluffy</option>
+                                    <option value="Forecast">Forecast</option>
+                                    <option value="Forewarn">Forewarn</option>
+                                    <option value="Friend Guard">Friend Guard</option>
+                                    <option value="Frisk">Frisk</option>
+                                    <option value="Full Metal Body">Full Metal Body</option>
+                                    <option value="Fur Coat">Fur Coat</option>
+                                    <option value="Gluttony">Gluttony</option>
+                                    <option value="Good as Gold">Good as Gold</option>
+                                    <option value="Gooey">Gooey</option>
+                                    <option value="Gorilla Tactics">Gorilla Tactics</option>
+                                    <option value="Grassy Surge">Grassy Surge</option>
+                                    <option value="Grim Neigh">Grim Neigh</option>
+                                    <option value="Guard Dog">Guard Dog</option>
+                                    <option value="Gulp Missile">Gulp Missile</option>
+                                    <option value="Guts">Guts</option>
+                                    <option value="Hadron Engine">Hadron Engine</option>
+                                    <option value="Healer">Healer</option>
+                                    <option value="Heatproof">Heatproof</option>
+                                    <option value="Heavy Metal">Heavy Metal</option>
+                                    <option value="Honey Gather">Honey Gather</option>
+                                    <option value="Hospitality">Hospitality</option>
+                                    <option value="Huge Power">Huge Power</option>
+                                    <option value="Hunger Switch">Hunger Switch</option>
+                                    <option value="Hustle">Hustle</option>
+                                    <option value="Hydration">Hydration</option>
+                                    <option value="Hyper Cutter">Hyper Cutter</option>
+                                    <option value="Ice Body">Ice Body</option>
+                                    <option value="Ice Face">Ice Face</option>
+                                    <option value="Illuminate">Illuminate</option>
+                                    <option value="Illusion">Illusion</option>
+                                    <option value="Immunity">Immunity</option>
+                                    <option value="Infiltrator">Infiltrator</option>
+                                    <option value="Innards Out">Innards Out</option>
+                                    <option value="Inner Focus">Inner Focus</option>
+                                    <option value="Insomnia">Insomnia</option>
+                                    <option value="Intimidate">Intimidate</option>
+                                    <option value="Intrepid Sword">Intrepid Sword</option>
+                                    <option value="Iron Barbs">Iron Barbs</option>
+                                    <option value="Iron Fist">Iron Fist</option>
+                                    <option value="Justified">Justified</option>
+                                    <option value="Keen Eye">Keen Eye</option>
+                                    <option value="Klutz">Klutz</option>
+                                    <option value="Leaf Guard">Leaf Guard</option>
+                                    <option value="Levitate">Levitate</option>
+                                    <option value="Light Metal">Light Metal</option>
+                                    <option value="Lightning Rod">Lightning Rod</option>
+                                    <option value="Limber">Limber</option>
+                                    <option value="Lingering Aroma">Lingering Aroma</option>
+                                    <option value="Liquid Ooze">Liquid Ooze</option>
+                                    <option value="Magic Bounce">Magic Bounce</option>
+                                    <option value="Magic Guard">Magic Guard</option>
+                                    <option value="Magician">Magician</option>
+                                    <option value="Magma Armor">Magma Armor</option>
+                                    <option value="Magnet Pull">Magnet Pull</option>
+                                    <option value="Marvel Scale">Marvel Scale</option>
+                                    <option value="Mega Launcher">Mega Launcher</option>
+                                    <option value="Merciless">Merciless</option>
+                                    <option value="Mimicry">Mimicry</option>
+                                    <option value="Mind’s Eye">Mind’s Eye</option>
+                                    <option value="Minus">Minus</option>
+                                    <option value="Misty Surge">Misty Surge</option>
+                                    <option value="Mold Breaker">Mold Breaker</option>
+                                    <option value="Motor Drive">Motor Drive</option>
+                                    <option value="Moxie">Moxie</option>
+                                    <option value="Multitype">Multitype</option>
+                                    <option value="Mummy">Mummy</option>
+                                    <option value="Mycelium Might">Mycelium Might</option>
+                                    <option value="Natural Cure">Natural Cure</option>
+                                    <option value="Neuroforce">Neuroforce</option>
+                                    <option value="Neutralizing Gas">Neutralizing Gas</option>
+                                    <option value="No Guard">No Guard</option>
+                                    <option value="Normalize">Normalize</option>
+                                    <option value="Oblivious">Oblivious</option>
+                                    <option value="Opportunist">Opportunist</option>
+                                    <option value="Orichalcum Pulse">Orichalcum Pulse</option>
+                                    <option value="Overcoat">Overcoat</option>
+                                    <option value="Overgrow">Overgrow</option>
+                                    <option value="Own Tempo">Own Tempo</option>
+                                    <option value="Parental Bond">Parental Bond</option>
+                                    <option value="Pastel Veil">Pastel Veil</option>
+                                    <option value="Pickpocket">Pickpocket</option>
+                                    <option value="Pickup">Pickup</option>
+                                    <option value="Pixilate">Pixilate</option>
+                                    <option value="Plus">Plus</option>
+                                    <option value="Poison Heal">Poison Heal</option>
+                                    <option value="Poison Point">Poison Point</option>
+                                    <option value="Poison Puppeteer">Poison Puppeteer</option>
+                                    <option value="Poison Touch">Poison Touch</option>
+                                    <option value="Power Construct">Power Construct</option>
+                                    <option value="Power Spot">Power Spot</option>
+                                    <option value="Prankster">Prankster</option>
+                                    <option value="Pressure">Pressure</option>
+                                    <option value="Primordial Sea">Primordial Sea</option>
+                                    <option value="Prism Armor">Prism Armor</option>
+                                    <option value="Protosynthesis">Protosynthesis</option>
+                                    <option value="Psychic Surge">Psychic Surge</option>
+                                    <option value="Punk Rock">Punk Rock</option>
+                                    <option value="Pure Power">Pure Power</option>
+                                    <option value="Purifying Salt">Purifying Salt</option>
+                                    <option value="Quark Drive">Quark Drive</option>
+                                    <option value="Queenly Majesty">Queenly Majesty</option>
+                                    <option value="Quick Draw">Quick Draw</option>
+                                    <option value="Quick Feet">Quick Feet</option>
+                                    <option value="RKS System">RKS System</option>
+                                    <option value="Rain Dish">Rain Dish</option>
+                                    <option value="Rattled">Rattled</option>
+                                    <option value="Receiver">Receiver</option>
+                                    <option value="Reckless">Reckless</option>
+                                    <option value="Refrigerate">Refrigerate</option>
+                                    <option value="Regenerator">Regenerator</option>
+                                    <option value="Ripen">Ripen</option>
+                                    <option value="Rivalry">Rivalry</option>
+                                    <option value="Rock Head">Rock Head</option>
+                                    <option value="Rough Skin">Rough Skin</option>
+                                    <option value="Run Away">Run Away</option>
+                                    <option value="Sand Force">Sand Force</option>
+                                    <option value="Sand Rush">Sand Rush</option>
+                                    <option value="Sand Spit">Sand Spit</option>
+                                    <option value="Sand Stream">Sand Stream</option>
+                                    <option value="Sand Veil">Sand Veil</option>
+                                    <option value="Sap Sipper">Sap Sipper</option>
+                                    <option value="Schooling">Schooling</option>
+                                    <option value="Scrappy">Scrappy</option>
+                                    <option value="Screen Cleaner">Screen Cleaner</option>
+                                    <option value="Seed Sower">Seed Sower</option>
+                                    <option value="Serene Grace">Serene Grace</option>
+                                    <option value="Shadow Shield">Shadow Shield</option>
+                                    <option value="Shadow Tag">Shadow Tag</option>
+                                    <option value="Sharpness">Sharpness</option>
+                                    <option value="Shed Skin">Shed Skin</option>
+                                    <option value="Sheer Force">Sheer Force</option>
+                                    <option value="Shell Armor">Shell Armor</option>
+                                    <option value="Shield Dust">Shield Dust</option>
+                                    <option value="Shields Down">Shields Down</option>
+                                    <option value="Simple">Simple</option>
+                                    <option value="Skill Link">Skill Link</option>
+                                    <option value="Slow Start">Slow Start</option>
+                                    <option value="Slush Rush">Slush Rush</option>
+                                    <option value="Sniper">Sniper</option>
+                                    <option value="Snow Cloak">Snow Cloak</option>
+                                    <option value="Snow Warning">Snow Warning</option>
+                                    <option value="Solar Power">Solar Power</option>
+                                    <option value="Solid Rock">Solid Rock</option>
+                                    <option value="Soul-Heart">Soul-Heart</option>
+                                    <option value="Soundproof">Soundproof</option>
+                                    <option value="Speed Boost">Speed Boost</option>
+                                    <option value="Stakeout">Stakeout</option>
+                                    <option value="Stall">Stall</option>
+                                    <option value="Stamina">Stamina</option>
+                                    <option value="Stance Change">Stance Change</option>
+                                    <option value="Static">Static</option>
+                                    <option value="Steadfast">Steadfast</option>
+                                    <option value="Steam Engine">Steam Engine</option>
+                                    <option value="Steelworker">Steelworker</option>
+                                    <option value="Stench">Stench</option>
+                                    <option value="Sticky Hold">Sticky Hold</option>
+                                    <option value="Storm Drain">Storm Drain</option>
+                                    <option value="Strong Jaw">Strong Jaw</option>
+                                    <option value="Sturdy">Sturdy</option>
+                                    <option value="Suction Cups">Suction Cups</option>
+                                    <option value="Super Luck">Super Luck</option>
+                                    <option value="Supersweet Syrup">Supersweet Syrup</option>
+                                    <option value="Supreme Overlord">Supreme Overlord</option>
+                                    <option value="Surge Surfer">Surge Surfer</option>
+                                    <option value="Swarm">Swarm</option>
+                                    <option value="Sweet Veil">Sweet Veil</option>
+                                    <option value="Swift Swim">Swift Swim</option>
+                                    <option value="Sword of Ruin">Sword of Ruin</option>
+                                    <option value="Synchronize">Synchronize</option>
+                                    <option value="Tablets of Ruin">Tablets of Ruin</option>
+                                    <option value="Tangled Feet">Tangled Feet</option>
+                                    <option value="Tangling Hair">Tangling Hair</option>
+                                    <option value="Technician">Technician</option>
+                                    <option value="Telepathy">Telepathy</option>
+                                    <option value="Tera Shell">Tera Shell</option>
+                                    <option value="Tera Shift">Tera Shift</option>
+                                    <option value="Teraform Zero">Teraform Zero</option>
+                                    <option value="Teravolt">Teravolt</option>
+                                    <option value="Thermal Exchange">Thermal Exchange</option>
+                                    <option value="Thick Fat">Thick Fat</option>
+                                    <option value="Tinted Lens">Tinted Lens</option>
+                                    <option value="Torrent">Torrent</option>
+                                    <option value="Tough Claws">Tough Claws</option>
+                                    <option value="Toxic Chain">Toxic Chain</option>
+                                    <option value="Toxic Debris">Toxic Debris</option>
+                                    <option value="Trace">Trace</option>
+                                    <option value="Transistor">Transistor</option>
+                                    <option value="Triage">Triage</option>
+                                    <option value="Truant">Truant</option>
+                                    <option value="Turboblaze">Turboblaze</option>
+                                    <option value="Unaware">Unaware</option>
+                                    <option value="Unburden">Unburden</option>
+                                    <option value="Unnerve">Unnerve</option>
+                                    <option value="Unseen Fist">Unseen Fist</option>
+                                    <option value="Vessel of Ruin">Vessel of Ruin</option>
+                                    <option value="Victory Star">Victory Star</option>
+                                    <option value="Vital Spirit">Vital Spirit</option>
+                                    <option value="Volt Absorb">Volt Absorb</option>
+                                    <option value="Wandering Spirit">Wandering Spirit</option>
+                                    <option value="Water Absorb">Water Absorb</option>
+                                    <option value="Water Bubble">Water Bubble</option>
+                                    <option value="Water Compaction">Water Compaction</option>
+                                    <option value="Water Veil">Water Veil</option>
+                                    <option value="Weak Armor">Weak Armor</option>
+                                    <option value="Well-Baked Body">Well-Baked Body</option>
+                                    <option value="White Smoke">White Smoke</option>
+                                    <option value="Wimp Out">Wimp Out</option>
+                                    <option value="Wind Power">Wind Power</option>
+                                    <option value="Wind Rider">Wind Rider</option>
+                                    <option value="Wonder Guard">Wonder Guard</option>
+                                    <option value="Wonder Skin">Wonder Skin</option>
+                                    <option value="Zero to Hero">Zero to Hero</option>
+                            </select>
+                            <i class="icon icon_arrow_sm_down"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="content-block content-block-full">
+
+                        <h3 class="section-title pokedex-filter-title">Height</h3>
+
+                        <ul class="pokedex-filter-height-list height" data-type="height">
+
+                            <li class="size " data-value="short" data-type="height" tabindex="-1">
+                                <span class="icon icon_filter_height_small"></span>
+                                <span class="offscreen">short</span>
+                            </li>
+
+                            <li class="size  middle" data-value="medium" data-type="height" tabindex="-1">
+                                <span class="icon icon_filter_height_medium"></span>
+                                <span class="offscreen">medium</span>
+                            </li>
+
+                            <li class="size " data-value="tall" data-type="height" tabindex="-1">
+                                <span class="icon icon_filter_height_large"></span>
+                                <span class="offscreen">tall</span>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="content-block content-block-full">
+
+                        <h3 class="section-title pokedex-filter-title">Weight</h3>
+
+                        <ul class="pokedex-filter-weight-list weight" data-type="weight">
+
+                            <li class="size" data-value="light" data-type="weight" tabindex="-1">
+                                <span class="icon icon_filter_weight_small"></span>
+                                <span class="offscreen">light</span>
+                            </li>
+
+                            <li class="size middle" data-value="medium" data-type="weight" tabindex="-1">
+                                <span class="icon icon_filter_weight_medium"></span>
+                                <span class="offscreen">medium</span>
+                            </li>
+
+                            <li class="size" data-value="heavy" data-type="weight" tabindex="-1">
+                                <span class="icon icon_filter_weight_large"></span>
+                                <span class="offscreen">heavy</span>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="content-block content-block-full">
+
+                        <div class="filter-action">
+
+                            <a class="button button-orange no-arrow" id="advSearch" tabindex="-1">
+                                <i class="icon icon_search"></i>
+                                Search
+                            </a>
+                            <a class="button button-gray no-arrow" id="reset" tabindex="-1">
+                                Reset
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="section pokedex-filter-toggle">
+
+        <div class="filter-toggle-span">
+			<span tabindex="0">
+				<b class="text">Show Advanced Search</b>
+				<i class="icon icon_arrow_sm_down hidden-mobile"></i>
+			</span>
+        </div>
+
+    </section>
+
+    <section class="section overflow-visible">
+
+        <div class="column-12 push-1">
+
+            <a id="shuffle" class="button button-lightblue no-arrow" tabindex="0">
+                <i class="icon icon_refresh"></i>
+                Surprise Me!
+            </a>
+
+            <div class="flex">
+                <h3 class="color-text color-gray sort-label">Sort By</h3>
+                <div class="styled-select button-black icon icon_pokeball">
+                    <select id="sortOrder">
+                        <option selected="" value="numberAsc">Lowest Number (First)</option>
+                        <option value="numberDesc">Highest Number (First)</option>
+                        <option value="nameAsc">A-Z</option>
+                        <option value="nameDesc">Z-A</option>
+                    </select>
+                    <i class="icon icon_arrow_sm_down"></i>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section pokedex-results overflow-visible loading">
+
+        <ul class="results"></ul>
+
+        <div class="no-results column-12 push-1">
+            <div class="alert alert-error">
+                
+		<h3>No Pokémon Matched Your Search!</h3>
+
+<p><strong>Try these suggestions to find a Pokémon:</strong></p>
+<ul>
+<li><p>Reduce the number of search parameters</p></li>
+<li><p>Search for only one Pokémon type at a time</p></li>
+<li><p>Try multiple body sizes and shapes</p></li>
+</ul>
+        
+
+            </div>
+        </div>
+
+        <div class="loader"></div>
+
+        <div class="content-block content-block-full">
+            <a href="" id="loadMore">
+                <span class="button-lightblue">Load more Pokémon</span>
+            </a>
+        </div>
+
+    </section>
+
+        <section class="mosaic section pokedex-promo">
+                <div class="column-4 push-1">
+
+    <a href="/us/pokemon-news/seize-your-destiny-during-go-battle-league-dual-destiny"
+        
+        class=""
+        
+    >
+<div class="content-block   ">
+
+
+
+        <div class="tile-image-wrapper">
+                <img src="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/01/pokemon-go-169.png"
+                     class="breakpoint rating-image"
+                     data-maxwidth720px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/01/pokemon-go-169.png"
+                     data-minwidth721px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/01/pokemon-go-169.png"
+                     alt="Delightful Duels Await in Dual Destiny"/>
+        </div>
+
+                <div class="banner banner banner-black">
+                    <h3>Delightful Duels Await in Dual Destiny</h3>
+                    <p>The next Season of the Pokémon&nbsp;GO Battle League brings attack changes, special events, and more.</p>
+            </div>
+
+
+
+</div>
+    </a>
+                </div>
+                <div class="column-4 push-5">
+
+    <a href="/us/pokemon-news/reminder-pokemon-scarlet-and-pokemon-violet-in-game-events"
+        
+        class=""
+        
+    >
+<div class="content-block   ">
+
+
+
+        <div class="tile-image-wrapper">
+                <img src="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-scarlet-violet/events/2024/11/27/scarlet-violet-169-en.png"
+                     class="breakpoint rating-image"
+                     data-maxwidth720px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-scarlet-violet/events/2024/11/27/scarlet-violet-169-en.png"
+                     data-minwidth721px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-scarlet-violet/events/2024/11/27/scarlet-violet-169-en.png"
+                     alt="Enjoy Mass Outbreaks and Tera Raid Battles Starting November 28"/>
+        </div>
+
+                <div class="banner banner banner-pink">
+                    <h3>Enjoy Mass Outbreaks and Tera Raid Battles Starting November 28</h3>
+                    <p>Mass outbreaks of Tinkatink and Chansey—along with Tera Raid Battles featuring Corviknight and Bellibolt—are coming soon to the <em>Pokémon Scarlet</em> and <em>Pokémon Violet</em> games.</p>
+            </div>
+
+
+
+</div>
+    </a>
+                </div>
+                <div class="column-4 push-9">
+
+    <a href="/us/pokemon-news/sinistea-and-polteageist-make-their-pokemon-go-debuts"
+        
+        class=""
+        
+    >
+<div class="content-block   ">
+
+
+
+        <div class="tile-image-wrapper">
+                <img src="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/02/pokemon-go-169.png"
+                     class="breakpoint rating-image"
+                     data-maxwidth720px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/02/pokemon-go-169.png"
+                     data-minwidth721px="/static-assets/content-assets/cms2/img/video-games/_tiles/pokemon-go/2024/12/03/02/pokemon-go-169.png"
+                     alt="This Pokémon GO Event Is Just Your Cup of Tea"/>
+        </div>
+
+                <div class="banner banner banner-purple">
+                    <h3>This Pokémon GO Event Is Just Your Cup of Tea</h3>
+                    <p>Sinistea and Polteageist are making their Pokémon&nbsp;GO debut, and Shiny Genesect (Chill Drive) arrives in fire-star raids.</p>
+            </div>
+
+
+
+</div>
+    </a>
+                </div>
+        </section>
+
+    <noscript>
+        <h2>National Pokédex</h2>
+        <ul>
+            <li><a href="/us/pokedex/bulbasaur">1 - Bulbasaur</a></li>
+            <li><a href="/us/pokedex/ivysaur">2 - Ivysaur</a></li>
+            <li><a href="/us/pokedex/venusaur">3 - Venusaur</a></li>
+            <li><a href="/us/pokedex/charmander">4 - Charmander</a></li>
+            <li><a href="/us/pokedex/charmeleon">5 - Charmeleon</a></li>
+            <li><a href="/us/pokedex/charizard">6 - Charizard</a></li>
+            <li><a href="/us/pokedex/squirtle">7 - Squirtle</a></li>
+            <li><a href="/us/pokedex/wartortle">8 - Wartortle</a></li>
+            <li><a href="/us/pokedex/blastoise">9 - Blastoise</a></li>
+            <li><a href="/us/pokedex/caterpie">10 - Caterpie</a></li>
+            <li><a href="/us/pokedex/metapod">11 - Metapod</a></li>
+            <li><a href="/us/pokedex/butterfree">12 - Butterfree</a></li>
+            <li><a href="/us/pokedex/weedle">13 - Weedle</a></li>
+            <li><a href="/us/pokedex/kakuna">14 - Kakuna</a></li>
+            <li><a href="/us/pokedex/beedrill">15 - Beedrill</a></li>
+            <li><a href="/us/pokedex/pidgey">16 - Pidgey</a></li>
+            <li><a href="/us/pokedex/pidgeotto">17 - Pidgeotto</a></li>
+            <li><a href="/us/pokedex/pidgeot">18 - Pidgeot</a></li>
+            <li><a href="/us/pokedex/rattata">19 - Rattata</a></li>
+            <li><a href="/us/pokedex/raticate">20 - Raticate</a></li>
+            <li><a href="/us/pokedex/spearow">21 - Spearow</a></li>
+            <li><a href="/us/pokedex/fearow">22 - Fearow</a></li>
+            <li><a href="/us/pokedex/ekans">23 - Ekans</a></li>
+            <li><a href="/us/pokedex/arbok">24 - Arbok</a></li>
+            <li><a href="/us/pokedex/pikachu">25 - Pikachu</a></li>
+            <li><a href="/us/pokedex/raichu">26 - Raichu</a></li>
+            <li><a href="/us/pokedex/sandshrew">27 - Sandshrew</a></li>
+            <li><a href="/us/pokedex/sandslash">28 - Sandslash</a></li>
+            <li><a href="/us/pokedex/nidoran-female">29 - Nidoran♀</a></li>
+            <li><a href="/us/pokedex/nidorina">30 - Nidorina</a></li>
+            <li><a href="/us/pokedex/nidoqueen">31 - Nidoqueen</a></li>
+            <li><a href="/us/pokedex/nidoran-male">32 - Nidoran♂</a></li>
+            <li><a href="/us/pokedex/nidorino">33 - Nidorino</a></li>
+            <li><a href="/us/pokedex/nidoking">34 - Nidoking</a></li>
+            <li><a href="/us/pokedex/clefairy">35 - Clefairy</a></li>
+            <li><a href="/us/pokedex/clefable">36 - Clefable</a></li>
+            <li><a href="/us/pokedex/vulpix">37 - Vulpix</a></li>
+            <li><a href="/us/pokedex/ninetales">38 - Ninetales</a></li>
+            <li><a href="/us/pokedex/jigglypuff">39 - Jigglypuff</a></li>
+            <li><a href="/us/pokedex/wigglytuff">40 - Wigglytuff</a></li>
+            <li><a href="/us/pokedex/zubat">41 - Zubat</a></li>
+            <li><a href="/us/pokedex/golbat">42 - Golbat</a></li>
+            <li><a href="/us/pokedex/oddish">43 - Oddish</a></li>
+            <li><a href="/us/pokedex/gloom">44 - Gloom</a></li>
+            <li><a href="/us/pokedex/vileplume">45 - Vileplume</a></li>
+            <li><a href="/us/pokedex/paras">46 - Paras</a></li>
+            <li><a href="/us/pokedex/parasect">47 - Parasect</a></li>
+            <li><a href="/us/pokedex/venonat">48 - Venonat</a></li>
+            <li><a href="/us/pokedex/venomoth">49 - Venomoth</a></li>
+            <li><a href="/us/pokedex/diglett">50 - Diglett</a></li>
+            <li><a href="/us/pokedex/dugtrio">51 - Dugtrio</a></li>
+            <li><a href="/us/pokedex/meowth">52 - Meowth</a></li>
+            <li><a href="/us/pokedex/persian">53 - Persian</a></li>
+            <li><a href="/us/pokedex/psyduck">54 - Psyduck</a></li>
+            <li><a href="/us/pokedex/golduck">55 - Golduck</a></li>
+            <li><a href="/us/pokedex/mankey">56 - Mankey</a></li>
+            <li><a href="/us/pokedex/primeape">57 - Primeape</a></li>
+            <li><a href="/us/pokedex/growlithe">58 - Growlithe</a></li>
+            <li><a href="/us/pokedex/arcanine">59 - Arcanine</a></li>
+            <li><a href="/us/pokedex/poliwag">60 - Poliwag</a></li>
+            <li><a href="/us/pokedex/poliwhirl">61 - Poliwhirl</a></li>
+            <li><a href="/us/pokedex/poliwrath">62 - Poliwrath</a></li>
+            <li><a href="/us/pokedex/abra">63 - Abra</a></li>
+            <li><a href="/us/pokedex/kadabra">64 - Kadabra</a></li>
+            <li><a href="/us/pokedex/alakazam">65 - Alakazam</a></li>
+            <li><a href="/us/pokedex/machop">66 - Machop</a></li>
+            <li><a href="/us/pokedex/machoke">67 - Machoke</a></li>
+            <li><a href="/us/pokedex/machamp">68 - Machamp</a></li>
+            <li><a href="/us/pokedex/bellsprout">69 - Bellsprout</a></li>
+            <li><a href="/us/pokedex/weepinbell">70 - Weepinbell</a></li>
+            <li><a href="/us/pokedex/victreebel">71 - Victreebel</a></li>
+            <li><a href="/us/pokedex/tentacool">72 - Tentacool</a></li>
+            <li><a href="/us/pokedex/tentacruel">73 - Tentacruel</a></li>
+            <li><a href="/us/pokedex/geodude">74 - Geodude</a></li>
+            <li><a href="/us/pokedex/graveler">75 - Graveler</a></li>
+            <li><a href="/us/pokedex/golem">76 - Golem</a></li>
+            <li><a href="/us/pokedex/ponyta">77 - Ponyta</a></li>
+            <li><a href="/us/pokedex/rapidash">78 - Rapidash</a></li>
+            <li><a href="/us/pokedex/slowpoke">79 - Slowpoke</a></li>
+            <li><a href="/us/pokedex/slowbro">80 - Slowbro</a></li>
+            <li><a href="/us/pokedex/magnemite">81 - Magnemite</a></li>
+            <li><a href="/us/pokedex/magneton">82 - Magneton</a></li>
+            <li><a href="/us/pokedex/farfetchd">83 - Farfetch’d</a></li>
+            <li><a href="/us/pokedex/doduo">84 - Doduo</a></li>
+            <li><a href="/us/pokedex/dodrio">85 - Dodrio</a></li>
+            <li><a href="/us/pokedex/seel">86 - Seel</a></li>
+            <li><a href="/us/pokedex/dewgong">87 - Dewgong</a></li>
+            <li><a href="/us/pokedex/grimer">88 - Grimer</a></li>
+            <li><a href="/us/pokedex/muk">89 - Muk</a></li>
+            <li><a href="/us/pokedex/shellder">90 - Shellder</a></li>
+            <li><a href="/us/pokedex/cloyster">91 - Cloyster</a></li>
+            <li><a href="/us/pokedex/gastly">92 - Gastly</a></li>
+            <li><a href="/us/pokedex/haunter">93 - Haunter</a></li>
+            <li><a href="/us/pokedex/gengar">94 - Gengar</a></li>
+            <li><a href="/us/pokedex/onix">95 - Onix</a></li>
+            <li><a href="/us/pokedex/drowzee">96 - Drowzee</a></li>
+            <li><a href="/us/pokedex/hypno">97 - Hypno</a></li>
+            <li><a href="/us/pokedex/krabby">98 - Krabby</a></li>
+            <li><a href="/us/pokedex/kingler">99 - Kingler</a></li>
+            <li><a href="/us/pokedex/voltorb">100 - Voltorb</a></li>
+            <li><a href="/us/pokedex/electrode">101 - Electrode</a></li>
+            <li><a href="/us/pokedex/exeggcute">102 - Exeggcute</a></li>
+            <li><a href="/us/pokedex/exeggutor">103 - Exeggutor</a></li>
+            <li><a href="/us/pokedex/cubone">104 - Cubone</a></li>
+            <li><a href="/us/pokedex/marowak">105 - Marowak</a></li>
+            <li><a href="/us/pokedex/hitmonlee">106 - Hitmonlee</a></li>
+            <li><a href="/us/pokedex/hitmonchan">107 - Hitmonchan</a></li>
+            <li><a href="/us/pokedex/lickitung">108 - Lickitung</a></li>
+            <li><a href="/us/pokedex/koffing">109 - Koffing</a></li>
+            <li><a href="/us/pokedex/weezing">110 - Weezing</a></li>
+            <li><a href="/us/pokedex/rhyhorn">111 - Rhyhorn</a></li>
+            <li><a href="/us/pokedex/rhydon">112 - Rhydon</a></li>
+            <li><a href="/us/pokedex/chansey">113 - Chansey</a></li>
+            <li><a href="/us/pokedex/tangela">114 - Tangela</a></li>
+            <li><a href="/us/pokedex/kangaskhan">115 - Kangaskhan</a></li>
+            <li><a href="/us/pokedex/horsea">116 - Horsea</a></li>
+            <li><a href="/us/pokedex/seadra">117 - Seadra</a></li>
+            <li><a href="/us/pokedex/goldeen">118 - Goldeen</a></li>
+            <li><a href="/us/pokedex/seaking">119 - Seaking</a></li>
+            <li><a href="/us/pokedex/staryu">120 - Staryu</a></li>
+            <li><a href="/us/pokedex/starmie">121 - Starmie</a></li>
+            <li><a href="/us/pokedex/mr-mime">122 - Mr. Mime</a></li>
+            <li><a href="/us/pokedex/scyther">123 - Scyther</a></li>
+            <li><a href="/us/pokedex/jynx">124 - Jynx</a></li>
+            <li><a href="/us/pokedex/electabuzz">125 - Electabuzz</a></li>
+            <li><a href="/us/pokedex/magmar">126 - Magmar</a></li>
+            <li><a href="/us/pokedex/pinsir">127 - Pinsir</a></li>
+            <li><a href="/us/pokedex/tauros">128 - Tauros</a></li>
+            <li><a href="/us/pokedex/magikarp">129 - Magikarp</a></li>
+            <li><a href="/us/pokedex/gyarados">130 - Gyarados</a></li>
+            <li><a href="/us/pokedex/lapras">131 - Lapras</a></li>
+            <li><a href="/us/pokedex/ditto">132 - Ditto</a></li>
+            <li><a href="/us/pokedex/eevee">133 - Eevee</a></li>
+            <li><a href="/us/pokedex/vaporeon">134 - Vaporeon</a></li>
+            <li><a href="/us/pokedex/jolteon">135 - Jolteon</a></li>
+            <li><a href="/us/pokedex/flareon">136 - Flareon</a></li>
+            <li><a href="/us/pokedex/porygon">137 - Porygon</a></li>
+            <li><a href="/us/pokedex/omanyte">138 - Omanyte</a></li>
+            <li><a href="/us/pokedex/omastar">139 - Omastar</a></li>
+            <li><a href="/us/pokedex/kabuto">140 - Kabuto</a></li>
+            <li><a href="/us/pokedex/kabutops">141 - Kabutops</a></li>
+            <li><a href="/us/pokedex/aerodactyl">142 - Aerodactyl</a></li>
+            <li><a href="/us/pokedex/snorlax">143 - Snorlax</a></li>
+            <li><a href="/us/pokedex/articuno">144 - Articuno</a></li>
+            <li><a href="/us/pokedex/zapdos">145 - Zapdos</a></li>
+            <li><a href="/us/pokedex/moltres">146 - Moltres</a></li>
+            <li><a href="/us/pokedex/dratini">147 - Dratini</a></li>
+            <li><a href="/us/pokedex/dragonair">148 - Dragonair</a></li>
+            <li><a href="/us/pokedex/dragonite">149 - Dragonite</a></li>
+            <li><a href="/us/pokedex/mewtwo">150 - Mewtwo</a></li>
+            <li><a href="/us/pokedex/mew">151 - Mew</a></li>
+            <li><a href="/us/pokedex/chikorita">152 - Chikorita</a></li>
+            <li><a href="/us/pokedex/bayleef">153 - Bayleef</a></li>
+            <li><a href="/us/pokedex/meganium">154 - Meganium</a></li>
+            <li><a href="/us/pokedex/cyndaquil">155 - Cyndaquil</a></li>
+            <li><a href="/us/pokedex/quilava">156 - Quilava</a></li>
+            <li><a href="/us/pokedex/typhlosion">157 - Typhlosion</a></li>
+            <li><a href="/us/pokedex/totodile">158 - Totodile</a></li>
+            <li><a href="/us/pokedex/croconaw">159 - Croconaw</a></li>
+            <li><a href="/us/pokedex/feraligatr">160 - Feraligatr</a></li>
+            <li><a href="/us/pokedex/sentret">161 - Sentret</a></li>
+            <li><a href="/us/pokedex/furret">162 - Furret</a></li>
+            <li><a href="/us/pokedex/hoothoot">163 - Hoothoot</a></li>
+            <li><a href="/us/pokedex/noctowl">164 - Noctowl</a></li>
+            <li><a href="/us/pokedex/ledyba">165 - Ledyba</a></li>
+            <li><a href="/us/pokedex/ledian">166 - Ledian</a></li>
+            <li><a href="/us/pokedex/spinarak">167 - Spinarak</a></li>
+            <li><a href="/us/pokedex/ariados">168 - Ariados</a></li>
+            <li><a href="/us/pokedex/crobat">169 - Crobat</a></li>
+            <li><a href="/us/pokedex/chinchou">170 - Chinchou</a></li>
+            <li><a href="/us/pokedex/lanturn">171 - Lanturn</a></li>
+            <li><a href="/us/pokedex/pichu">172 - Pichu</a></li>
+            <li><a href="/us/pokedex/cleffa">173 - Cleffa</a></li>
+            <li><a href="/us/pokedex/igglybuff">174 - Igglybuff</a></li>
+            <li><a href="/us/pokedex/togepi">175 - Togepi</a></li>
+            <li><a href="/us/pokedex/togetic">176 - Togetic</a></li>
+            <li><a href="/us/pokedex/natu">177 - Natu</a></li>
+            <li><a href="/us/pokedex/xatu">178 - Xatu</a></li>
+            <li><a href="/us/pokedex/mareep">179 - Mareep</a></li>
+            <li><a href="/us/pokedex/flaaffy">180 - Flaaffy</a></li>
+            <li><a href="/us/pokedex/ampharos">181 - Ampharos</a></li>
+            <li><a href="/us/pokedex/bellossom">182 - Bellossom</a></li>
+            <li><a href="/us/pokedex/marill">183 - Marill</a></li>
+            <li><a href="/us/pokedex/azumarill">184 - Azumarill</a></li>
+            <li><a href="/us/pokedex/sudowoodo">185 - Sudowoodo</a></li>
+            <li><a href="/us/pokedex/politoed">186 - Politoed</a></li>
+            <li><a href="/us/pokedex/hoppip">187 - Hoppip</a></li>
+            <li><a href="/us/pokedex/skiploom">188 - Skiploom</a></li>
+            <li><a href="/us/pokedex/jumpluff">189 - Jumpluff</a></li>
+            <li><a href="/us/pokedex/aipom">190 - Aipom</a></li>
+            <li><a href="/us/pokedex/sunkern">191 - Sunkern</a></li>
+            <li><a href="/us/pokedex/sunflora">192 - Sunflora</a></li>
+            <li><a href="/us/pokedex/yanma">193 - Yanma</a></li>
+            <li><a href="/us/pokedex/wooper">194 - Wooper</a></li>
+            <li><a href="/us/pokedex/quagsire">195 - Quagsire</a></li>
+            <li><a href="/us/pokedex/espeon">196 - Espeon</a></li>
+            <li><a href="/us/pokedex/umbreon">197 - Umbreon</a></li>
+            <li><a href="/us/pokedex/murkrow">198 - Murkrow</a></li>
+            <li><a href="/us/pokedex/slowking">199 - Slowking</a></li>
+            <li><a href="/us/pokedex/misdreavus">200 - Misdreavus</a></li>
+            <li><a href="/us/pokedex/unown">201 - Unown</a></li>
+            <li><a href="/us/pokedex/wobbuffet">202 - Wobbuffet</a></li>
+            <li><a href="/us/pokedex/girafarig">203 - Girafarig</a></li>
+            <li><a href="/us/pokedex/pineco">204 - Pineco</a></li>
+            <li><a href="/us/pokedex/forretress">205 - Forretress</a></li>
+            <li><a href="/us/pokedex/dunsparce">206 - Dunsparce</a></li>
+            <li><a href="/us/pokedex/gligar">207 - Gligar</a></li>
+            <li><a href="/us/pokedex/steelix">208 - Steelix</a></li>
+            <li><a href="/us/pokedex/snubbull">209 - Snubbull</a></li>
+            <li><a href="/us/pokedex/granbull">210 - Granbull</a></li>
+            <li><a href="/us/pokedex/qwilfish">211 - Qwilfish</a></li>
+            <li><a href="/us/pokedex/scizor">212 - Scizor</a></li>
+            <li><a href="/us/pokedex/shuckle">213 - Shuckle</a></li>
+            <li><a href="/us/pokedex/heracross">214 - Heracross</a></li>
+            <li><a href="/us/pokedex/sneasel">215 - Sneasel</a></li>
+            <li><a href="/us/pokedex/teddiursa">216 - Teddiursa</a></li>
+            <li><a href="/us/pokedex/ursaring">217 - Ursaring</a></li>
+            <li><a href="/us/pokedex/slugma">218 - Slugma</a></li>
+            <li><a href="/us/pokedex/magcargo">219 - Magcargo</a></li>
+            <li><a href="/us/pokedex/swinub">220 - Swinub</a></li>
+            <li><a href="/us/pokedex/piloswine">221 - Piloswine</a></li>
+            <li><a href="/us/pokedex/corsola">222 - Corsola</a></li>
+            <li><a href="/us/pokedex/remoraid">223 - Remoraid</a></li>
+            <li><a href="/us/pokedex/octillery">224 - Octillery</a></li>
+            <li><a href="/us/pokedex/delibird">225 - Delibird</a></li>
+            <li><a href="/us/pokedex/mantine">226 - Mantine</a></li>
+            <li><a href="/us/pokedex/skarmory">227 - Skarmory</a></li>
+            <li><a href="/us/pokedex/houndour">228 - Houndour</a></li>
+            <li><a href="/us/pokedex/houndoom">229 - Houndoom</a></li>
+            <li><a href="/us/pokedex/kingdra">230 - Kingdra</a></li>
+            <li><a href="/us/pokedex/phanpy">231 - Phanpy</a></li>
+            <li><a href="/us/pokedex/donphan">232 - Donphan</a></li>
+            <li><a href="/us/pokedex/porygon2">233 - Porygon2</a></li>
+            <li><a href="/us/pokedex/stantler">234 - Stantler</a></li>
+            <li><a href="/us/pokedex/smeargle">235 - Smeargle</a></li>
+            <li><a href="/us/pokedex/tyrogue">236 - Tyrogue</a></li>
+            <li><a href="/us/pokedex/hitmontop">237 - Hitmontop</a></li>
+            <li><a href="/us/pokedex/smoochum">238 - Smoochum</a></li>
+            <li><a href="/us/pokedex/elekid">239 - Elekid</a></li>
+            <li><a href="/us/pokedex/magby">240 - Magby</a></li>
+            <li><a href="/us/pokedex/miltank">241 - Miltank</a></li>
+            <li><a href="/us/pokedex/blissey">242 - Blissey</a></li>
+            <li><a href="/us/pokedex/raikou">243 - Raikou</a></li>
+            <li><a href="/us/pokedex/entei">244 - Entei</a></li>
+            <li><a href="/us/pokedex/suicune">245 - Suicune</a></li>
+            <li><a href="/us/pokedex/larvitar">246 - Larvitar</a></li>
+            <li><a href="/us/pokedex/pupitar">247 - Pupitar</a></li>
+            <li><a href="/us/pokedex/tyranitar">248 - Tyranitar</a></li>
+            <li><a href="/us/pokedex/lugia">249 - Lugia</a></li>
+            <li><a href="/us/pokedex/ho-oh">250 - Ho-Oh</a></li>
+            <li><a href="/us/pokedex/celebi">251 - Celebi</a></li>
+            <li><a href="/us/pokedex/treecko">252 - Treecko</a></li>
+            <li><a href="/us/pokedex/grovyle">253 - Grovyle</a></li>
+            <li><a href="/us/pokedex/sceptile">254 - Sceptile</a></li>
+            <li><a href="/us/pokedex/torchic">255 - Torchic</a></li>
+            <li><a href="/us/pokedex/combusken">256 - Combusken</a></li>
+            <li><a href="/us/pokedex/blaziken">257 - Blaziken</a></li>
+            <li><a href="/us/pokedex/mudkip">258 - Mudkip</a></li>
+            <li><a href="/us/pokedex/marshtomp">259 - Marshtomp</a></li>
+            <li><a href="/us/pokedex/swampert">260 - Swampert</a></li>
+            <li><a href="/us/pokedex/poochyena">261 - Poochyena</a></li>
+            <li><a href="/us/pokedex/mightyena">262 - Mightyena</a></li>
+            <li><a href="/us/pokedex/zigzagoon">263 - Zigzagoon</a></li>
+            <li><a href="/us/pokedex/linoone">264 - Linoone</a></li>
+            <li><a href="/us/pokedex/wurmple">265 - Wurmple</a></li>
+            <li><a href="/us/pokedex/silcoon">266 - Silcoon</a></li>
+            <li><a href="/us/pokedex/beautifly">267 - Beautifly</a></li>
+            <li><a href="/us/pokedex/cascoon">268 - Cascoon</a></li>
+            <li><a href="/us/pokedex/dustox">269 - Dustox</a></li>
+            <li><a href="/us/pokedex/lotad">270 - Lotad</a></li>
+            <li><a href="/us/pokedex/lombre">271 - Lombre</a></li>
+            <li><a href="/us/pokedex/ludicolo">272 - Ludicolo</a></li>
+            <li><a href="/us/pokedex/seedot">273 - Seedot</a></li>
+            <li><a href="/us/pokedex/nuzleaf">274 - Nuzleaf</a></li>
+            <li><a href="/us/pokedex/shiftry">275 - Shiftry</a></li>
+            <li><a href="/us/pokedex/taillow">276 - Taillow</a></li>
+            <li><a href="/us/pokedex/swellow">277 - Swellow</a></li>
+            <li><a href="/us/pokedex/wingull">278 - Wingull</a></li>
+            <li><a href="/us/pokedex/pelipper">279 - Pelipper</a></li>
+            <li><a href="/us/pokedex/ralts">280 - Ralts</a></li>
+            <li><a href="/us/pokedex/kirlia">281 - Kirlia</a></li>
+            <li><a href="/us/pokedex/gardevoir">282 - Gardevoir</a></li>
+            <li><a href="/us/pokedex/surskit">283 - Surskit</a></li>
+            <li><a href="/us/pokedex/masquerain">284 - Masquerain</a></li>
+            <li><a href="/us/pokedex/shroomish">285 - Shroomish</a></li>
+            <li><a href="/us/pokedex/breloom">286 - Breloom</a></li>
+            <li><a href="/us/pokedex/slakoth">287 - Slakoth</a></li>
+            <li><a href="/us/pokedex/vigoroth">288 - Vigoroth</a></li>
+            <li><a href="/us/pokedex/slaking">289 - Slaking</a></li>
+            <li><a href="/us/pokedex/nincada">290 - Nincada</a></li>
+            <li><a href="/us/pokedex/ninjask">291 - Ninjask</a></li>
+            <li><a href="/us/pokedex/shedinja">292 - Shedinja</a></li>
+            <li><a href="/us/pokedex/whismur">293 - Whismur</a></li>
+            <li><a href="/us/pokedex/loudred">294 - Loudred</a></li>
+            <li><a href="/us/pokedex/exploud">295 - Exploud</a></li>
+            <li><a href="/us/pokedex/makuhita">296 - Makuhita</a></li>
+            <li><a href="/us/pokedex/hariyama">297 - Hariyama</a></li>
+            <li><a href="/us/pokedex/azurill">298 - Azurill</a></li>
+            <li><a href="/us/pokedex/nosepass">299 - Nosepass</a></li>
+            <li><a href="/us/pokedex/skitty">300 - Skitty</a></li>
+            <li><a href="/us/pokedex/delcatty">301 - Delcatty</a></li>
+            <li><a href="/us/pokedex/sableye">302 - Sableye</a></li>
+            <li><a href="/us/pokedex/mawile">303 - Mawile</a></li>
+            <li><a href="/us/pokedex/aron">304 - Aron</a></li>
+            <li><a href="/us/pokedex/lairon">305 - Lairon</a></li>
+            <li><a href="/us/pokedex/aggron">306 - Aggron</a></li>
+            <li><a href="/us/pokedex/meditite">307 - Meditite</a></li>
+            <li><a href="/us/pokedex/medicham">308 - Medicham</a></li>
+            <li><a href="/us/pokedex/electrike">309 - Electrike</a></li>
+            <li><a href="/us/pokedex/manectric">310 - Manectric</a></li>
+            <li><a href="/us/pokedex/plusle">311 - Plusle</a></li>
+            <li><a href="/us/pokedex/minun">312 - Minun</a></li>
+            <li><a href="/us/pokedex/volbeat">313 - Volbeat</a></li>
+            <li><a href="/us/pokedex/illumise">314 - Illumise</a></li>
+            <li><a href="/us/pokedex/roselia">315 - Roselia</a></li>
+            <li><a href="/us/pokedex/gulpin">316 - Gulpin</a></li>
+            <li><a href="/us/pokedex/swalot">317 - Swalot</a></li>
+            <li><a href="/us/pokedex/carvanha">318 - Carvanha</a></li>
+            <li><a href="/us/pokedex/sharpedo">319 - Sharpedo</a></li>
+            <li><a href="/us/pokedex/wailmer">320 - Wailmer</a></li>
+            <li><a href="/us/pokedex/wailord">321 - Wailord</a></li>
+            <li><a href="/us/pokedex/numel">322 - Numel</a></li>
+            <li><a href="/us/pokedex/camerupt">323 - Camerupt</a></li>
+            <li><a href="/us/pokedex/torkoal">324 - Torkoal</a></li>
+            <li><a href="/us/pokedex/spoink">325 - Spoink</a></li>
+            <li><a href="/us/pokedex/grumpig">326 - Grumpig</a></li>
+            <li><a href="/us/pokedex/spinda">327 - Spinda</a></li>
+            <li><a href="/us/pokedex/trapinch">328 - Trapinch</a></li>
+            <li><a href="/us/pokedex/vibrava">329 - Vibrava</a></li>
+            <li><a href="/us/pokedex/flygon">330 - Flygon</a></li>
+            <li><a href="/us/pokedex/cacnea">331 - Cacnea</a></li>
+            <li><a href="/us/pokedex/cacturne">332 - Cacturne</a></li>
+            <li><a href="/us/pokedex/swablu">333 - Swablu</a></li>
+            <li><a href="/us/pokedex/altaria">334 - Altaria</a></li>
+            <li><a href="/us/pokedex/zangoose">335 - Zangoose</a></li>
+            <li><a href="/us/pokedex/seviper">336 - Seviper</a></li>
+            <li><a href="/us/pokedex/lunatone">337 - Lunatone</a></li>
+            <li><a href="/us/pokedex/solrock">338 - Solrock</a></li>
+            <li><a href="/us/pokedex/barboach">339 - Barboach</a></li>
+            <li><a href="/us/pokedex/whiscash">340 - Whiscash</a></li>
+            <li><a href="/us/pokedex/corphish">341 - Corphish</a></li>
+            <li><a href="/us/pokedex/crawdaunt">342 - Crawdaunt</a></li>
+            <li><a href="/us/pokedex/baltoy">343 - Baltoy</a></li>
+            <li><a href="/us/pokedex/claydol">344 - Claydol</a></li>
+            <li><a href="/us/pokedex/lileep">345 - Lileep</a></li>
+            <li><a href="/us/pokedex/cradily">346 - Cradily</a></li>
+            <li><a href="/us/pokedex/anorith">347 - Anorith</a></li>
+            <li><a href="/us/pokedex/armaldo">348 - Armaldo</a></li>
+            <li><a href="/us/pokedex/feebas">349 - Feebas</a></li>
+            <li><a href="/us/pokedex/milotic">350 - Milotic</a></li>
+            <li><a href="/us/pokedex/castform">351 - Castform</a></li>
+            <li><a href="/us/pokedex/kecleon">352 - Kecleon</a></li>
+            <li><a href="/us/pokedex/shuppet">353 - Shuppet</a></li>
+            <li><a href="/us/pokedex/banette">354 - Banette</a></li>
+            <li><a href="/us/pokedex/duskull">355 - Duskull</a></li>
+            <li><a href="/us/pokedex/dusclops">356 - Dusclops</a></li>
+            <li><a href="/us/pokedex/tropius">357 - Tropius</a></li>
+            <li><a href="/us/pokedex/chimecho">358 - Chimecho</a></li>
+            <li><a href="/us/pokedex/absol">359 - Absol</a></li>
+            <li><a href="/us/pokedex/wynaut">360 - Wynaut</a></li>
+            <li><a href="/us/pokedex/snorunt">361 - Snorunt</a></li>
+            <li><a href="/us/pokedex/glalie">362 - Glalie</a></li>
+            <li><a href="/us/pokedex/spheal">363 - Spheal</a></li>
+            <li><a href="/us/pokedex/sealeo">364 - Sealeo</a></li>
+            <li><a href="/us/pokedex/walrein">365 - Walrein</a></li>
+            <li><a href="/us/pokedex/clamperl">366 - Clamperl</a></li>
+            <li><a href="/us/pokedex/huntail">367 - Huntail</a></li>
+            <li><a href="/us/pokedex/gorebyss">368 - Gorebyss</a></li>
+            <li><a href="/us/pokedex/relicanth">369 - Relicanth</a></li>
+            <li><a href="/us/pokedex/luvdisc">370 - Luvdisc</a></li>
+            <li><a href="/us/pokedex/bagon">371 - Bagon</a></li>
+            <li><a href="/us/pokedex/shelgon">372 - Shelgon</a></li>
+            <li><a href="/us/pokedex/salamence">373 - Salamence</a></li>
+            <li><a href="/us/pokedex/beldum">374 - Beldum</a></li>
+            <li><a href="/us/pokedex/metang">375 - Metang</a></li>
+            <li><a href="/us/pokedex/metagross">376 - Metagross</a></li>
+            <li><a href="/us/pokedex/regirock">377 - Regirock</a></li>
+            <li><a href="/us/pokedex/regice">378 - Regice</a></li>
+            <li><a href="/us/pokedex/registeel">379 - Registeel</a></li>
+            <li><a href="/us/pokedex/latias">380 - Latias</a></li>
+            <li><a href="/us/pokedex/latios">381 - Latios</a></li>
+            <li><a href="/us/pokedex/kyogre">382 - Kyogre</a></li>
+            <li><a href="/us/pokedex/groudon">383 - Groudon</a></li>
+            <li><a href="/us/pokedex/rayquaza">384 - Rayquaza</a></li>
+            <li><a href="/us/pokedex/jirachi">385 - Jirachi</a></li>
+            <li><a href="/us/pokedex/deoxys">386 - Deoxys</a></li>
+            <li><a href="/us/pokedex/turtwig">387 - Turtwig</a></li>
+            <li><a href="/us/pokedex/grotle">388 - Grotle</a></li>
+            <li><a href="/us/pokedex/torterra">389 - Torterra</a></li>
+            <li><a href="/us/pokedex/chimchar">390 - Chimchar</a></li>
+            <li><a href="/us/pokedex/monferno">391 - Monferno</a></li>
+            <li><a href="/us/pokedex/infernape">392 - Infernape</a></li>
+            <li><a href="/us/pokedex/piplup">393 - Piplup</a></li>
+            <li><a href="/us/pokedex/prinplup">394 - Prinplup</a></li>
+            <li><a href="/us/pokedex/empoleon">395 - Empoleon</a></li>
+            <li><a href="/us/pokedex/starly">396 - Starly</a></li>
+            <li><a href="/us/pokedex/staravia">397 - Staravia</a></li>
+            <li><a href="/us/pokedex/staraptor">398 - Staraptor</a></li>
+            <li><a href="/us/pokedex/bidoof">399 - Bidoof</a></li>
+            <li><a href="/us/pokedex/bibarel">400 - Bibarel</a></li>
+            <li><a href="/us/pokedex/kricketot">401 - Kricketot</a></li>
+            <li><a href="/us/pokedex/kricketune">402 - Kricketune</a></li>
+            <li><a href="/us/pokedex/shinx">403 - Shinx</a></li>
+            <li><a href="/us/pokedex/luxio">404 - Luxio</a></li>
+            <li><a href="/us/pokedex/luxray">405 - Luxray</a></li>
+            <li><a href="/us/pokedex/budew">406 - Budew</a></li>
+            <li><a href="/us/pokedex/roserade">407 - Roserade</a></li>
+            <li><a href="/us/pokedex/cranidos">408 - Cranidos</a></li>
+            <li><a href="/us/pokedex/rampardos">409 - Rampardos</a></li>
+            <li><a href="/us/pokedex/shieldon">410 - Shieldon</a></li>
+            <li><a href="/us/pokedex/bastiodon">411 - Bastiodon</a></li>
+            <li><a href="/us/pokedex/burmy">412 - Burmy</a></li>
+            <li><a href="/us/pokedex/wormadam">413 - Wormadam</a></li>
+            <li><a href="/us/pokedex/mothim">414 - Mothim</a></li>
+            <li><a href="/us/pokedex/combee">415 - Combee</a></li>
+            <li><a href="/us/pokedex/vespiquen">416 - Vespiquen</a></li>
+            <li><a href="/us/pokedex/pachirisu">417 - Pachirisu</a></li>
+            <li><a href="/us/pokedex/buizel">418 - Buizel</a></li>
+            <li><a href="/us/pokedex/floatzel">419 - Floatzel</a></li>
+            <li><a href="/us/pokedex/cherubi">420 - Cherubi</a></li>
+            <li><a href="/us/pokedex/cherrim">421 - Cherrim</a></li>
+            <li><a href="/us/pokedex/shellos">422 - Shellos</a></li>
+            <li><a href="/us/pokedex/gastrodon">423 - Gastrodon</a></li>
+            <li><a href="/us/pokedex/ambipom">424 - Ambipom</a></li>
+            <li><a href="/us/pokedex/drifloon">425 - Drifloon</a></li>
+            <li><a href="/us/pokedex/drifblim">426 - Drifblim</a></li>
+            <li><a href="/us/pokedex/buneary">427 - Buneary</a></li>
+            <li><a href="/us/pokedex/lopunny">428 - Lopunny</a></li>
+            <li><a href="/us/pokedex/mismagius">429 - Mismagius</a></li>
+            <li><a href="/us/pokedex/honchkrow">430 - Honchkrow</a></li>
+            <li><a href="/us/pokedex/glameow">431 - Glameow</a></li>
+            <li><a href="/us/pokedex/purugly">432 - Purugly</a></li>
+            <li><a href="/us/pokedex/chingling">433 - Chingling</a></li>
+            <li><a href="/us/pokedex/stunky">434 - Stunky</a></li>
+            <li><a href="/us/pokedex/skuntank">435 - Skuntank</a></li>
+            <li><a href="/us/pokedex/bronzor">436 - Bronzor</a></li>
+            <li><a href="/us/pokedex/bronzong">437 - Bronzong</a></li>
+            <li><a href="/us/pokedex/bonsly">438 - Bonsly</a></li>
+            <li><a href="/us/pokedex/mime-jr">439 - Mime Jr.</a></li>
+            <li><a href="/us/pokedex/happiny">440 - Happiny</a></li>
+            <li><a href="/us/pokedex/chatot">441 - Chatot</a></li>
+            <li><a href="/us/pokedex/spiritomb">442 - Spiritomb</a></li>
+            <li><a href="/us/pokedex/gible">443 - Gible</a></li>
+            <li><a href="/us/pokedex/gabite">444 - Gabite</a></li>
+            <li><a href="/us/pokedex/garchomp">445 - Garchomp</a></li>
+            <li><a href="/us/pokedex/munchlax">446 - Munchlax</a></li>
+            <li><a href="/us/pokedex/riolu">447 - Riolu</a></li>
+            <li><a href="/us/pokedex/lucario">448 - Lucario</a></li>
+            <li><a href="/us/pokedex/hippopotas">449 - Hippopotas</a></li>
+            <li><a href="/us/pokedex/hippowdon">450 - Hippowdon</a></li>
+            <li><a href="/us/pokedex/skorupi">451 - Skorupi</a></li>
+            <li><a href="/us/pokedex/drapion">452 - Drapion</a></li>
+            <li><a href="/us/pokedex/croagunk">453 - Croagunk</a></li>
+            <li><a href="/us/pokedex/toxicroak">454 - Toxicroak</a></li>
+            <li><a href="/us/pokedex/carnivine">455 - Carnivine</a></li>
+            <li><a href="/us/pokedex/finneon">456 - Finneon</a></li>
+            <li><a href="/us/pokedex/lumineon">457 - Lumineon</a></li>
+            <li><a href="/us/pokedex/mantyke">458 - Mantyke</a></li>
+            <li><a href="/us/pokedex/snover">459 - Snover</a></li>
+            <li><a href="/us/pokedex/abomasnow">460 - Abomasnow</a></li>
+            <li><a href="/us/pokedex/weavile">461 - Weavile</a></li>
+            <li><a href="/us/pokedex/magnezone">462 - Magnezone</a></li>
+            <li><a href="/us/pokedex/lickilicky">463 - Lickilicky</a></li>
+            <li><a href="/us/pokedex/rhyperior">464 - Rhyperior</a></li>
+            <li><a href="/us/pokedex/tangrowth">465 - Tangrowth</a></li>
+            <li><a href="/us/pokedex/electivire">466 - Electivire</a></li>
+            <li><a href="/us/pokedex/magmortar">467 - Magmortar</a></li>
+            <li><a href="/us/pokedex/togekiss">468 - Togekiss</a></li>
+            <li><a href="/us/pokedex/yanmega">469 - Yanmega</a></li>
+            <li><a href="/us/pokedex/leafeon">470 - Leafeon</a></li>
+            <li><a href="/us/pokedex/glaceon">471 - Glaceon</a></li>
+            <li><a href="/us/pokedex/gliscor">472 - Gliscor</a></li>
+            <li><a href="/us/pokedex/mamoswine">473 - Mamoswine</a></li>
+            <li><a href="/us/pokedex/porygon-z">474 - Porygon-Z</a></li>
+            <li><a href="/us/pokedex/gallade">475 - Gallade</a></li>
+            <li><a href="/us/pokedex/probopass">476 - Probopass</a></li>
+            <li><a href="/us/pokedex/dusknoir">477 - Dusknoir</a></li>
+            <li><a href="/us/pokedex/froslass">478 - Froslass</a></li>
+            <li><a href="/us/pokedex/rotom">479 - Rotom</a></li>
+            <li><a href="/us/pokedex/uxie">480 - Uxie</a></li>
+            <li><a href="/us/pokedex/mesprit">481 - Mesprit</a></li>
+            <li><a href="/us/pokedex/azelf">482 - Azelf</a></li>
+            <li><a href="/us/pokedex/dialga">483 - Dialga</a></li>
+            <li><a href="/us/pokedex/palkia">484 - Palkia</a></li>
+            <li><a href="/us/pokedex/heatran">485 - Heatran</a></li>
+            <li><a href="/us/pokedex/regigigas">486 - Regigigas</a></li>
+            <li><a href="/us/pokedex/giratina">487 - Giratina</a></li>
+            <li><a href="/us/pokedex/cresselia">488 - Cresselia</a></li>
+            <li><a href="/us/pokedex/phione">489 - Phione</a></li>
+            <li><a href="/us/pokedex/manaphy">490 - Manaphy</a></li>
+            <li><a href="/us/pokedex/darkrai">491 - Darkrai</a></li>
+            <li><a href="/us/pokedex/shaymin">492 - Shaymin</a></li>
+            <li><a href="/us/pokedex/arceus">493 - Arceus</a></li>
+            <li><a href="/us/pokedex/victini">494 - Victini</a></li>
+            <li><a href="/us/pokedex/snivy">495 - Snivy</a></li>
+            <li><a href="/us/pokedex/servine">496 - Servine</a></li>
+            <li><a href="/us/pokedex/serperior">497 - Serperior</a></li>
+            <li><a href="/us/pokedex/tepig">498 - Tepig</a></li>
+            <li><a href="/us/pokedex/pignite">499 - Pignite</a></li>
+            <li><a href="/us/pokedex/emboar">500 - Emboar</a></li>
+            <li><a href="/us/pokedex/oshawott">501 - Oshawott</a></li>
+            <li><a href="/us/pokedex/dewott">502 - Dewott</a></li>
+            <li><a href="/us/pokedex/samurott">503 - Samurott</a></li>
+            <li><a href="/us/pokedex/patrat">504 - Patrat</a></li>
+            <li><a href="/us/pokedex/watchog">505 - Watchog</a></li>
+            <li><a href="/us/pokedex/lillipup">506 - Lillipup</a></li>
+            <li><a href="/us/pokedex/herdier">507 - Herdier</a></li>
+            <li><a href="/us/pokedex/stoutland">508 - Stoutland</a></li>
+            <li><a href="/us/pokedex/purrloin">509 - Purrloin</a></li>
+            <li><a href="/us/pokedex/liepard">510 - Liepard</a></li>
+            <li><a href="/us/pokedex/pansage">511 - Pansage</a></li>
+            <li><a href="/us/pokedex/simisage">512 - Simisage</a></li>
+            <li><a href="/us/pokedex/pansear">513 - Pansear</a></li>
+            <li><a href="/us/pokedex/simisear">514 - Simisear</a></li>
+            <li><a href="/us/pokedex/panpour">515 - Panpour</a></li>
+            <li><a href="/us/pokedex/simipour">516 - Simipour</a></li>
+            <li><a href="/us/pokedex/munna">517 - Munna</a></li>
+            <li><a href="/us/pokedex/musharna">518 - Musharna</a></li>
+            <li><a href="/us/pokedex/pidove">519 - Pidove</a></li>
+            <li><a href="/us/pokedex/tranquill">520 - Tranquill</a></li>
+            <li><a href="/us/pokedex/unfezant">521 - Unfezant</a></li>
+            <li><a href="/us/pokedex/blitzle">522 - Blitzle</a></li>
+            <li><a href="/us/pokedex/zebstrika">523 - Zebstrika</a></li>
+            <li><a href="/us/pokedex/roggenrola">524 - Roggenrola</a></li>
+            <li><a href="/us/pokedex/boldore">525 - Boldore</a></li>
+            <li><a href="/us/pokedex/gigalith">526 - Gigalith</a></li>
+            <li><a href="/us/pokedex/woobat">527 - Woobat</a></li>
+            <li><a href="/us/pokedex/swoobat">528 - Swoobat</a></li>
+            <li><a href="/us/pokedex/drilbur">529 - Drilbur</a></li>
+            <li><a href="/us/pokedex/excadrill">530 - Excadrill</a></li>
+            <li><a href="/us/pokedex/audino">531 - Audino</a></li>
+            <li><a href="/us/pokedex/timburr">532 - Timburr</a></li>
+            <li><a href="/us/pokedex/gurdurr">533 - Gurdurr</a></li>
+            <li><a href="/us/pokedex/conkeldurr">534 - Conkeldurr</a></li>
+            <li><a href="/us/pokedex/tympole">535 - Tympole</a></li>
+            <li><a href="/us/pokedex/palpitoad">536 - Palpitoad</a></li>
+            <li><a href="/us/pokedex/seismitoad">537 - Seismitoad</a></li>
+            <li><a href="/us/pokedex/throh">538 - Throh</a></li>
+            <li><a href="/us/pokedex/sawk">539 - Sawk</a></li>
+            <li><a href="/us/pokedex/sewaddle">540 - Sewaddle</a></li>
+            <li><a href="/us/pokedex/swadloon">541 - Swadloon</a></li>
+            <li><a href="/us/pokedex/leavanny">542 - Leavanny</a></li>
+            <li><a href="/us/pokedex/venipede">543 - Venipede</a></li>
+            <li><a href="/us/pokedex/whirlipede">544 - Whirlipede</a></li>
+            <li><a href="/us/pokedex/scolipede">545 - Scolipede</a></li>
+            <li><a href="/us/pokedex/cottonee">546 - Cottonee</a></li>
+            <li><a href="/us/pokedex/whimsicott">547 - Whimsicott</a></li>
+            <li><a href="/us/pokedex/petilil">548 - Petilil</a></li>
+            <li><a href="/us/pokedex/lilligant">549 - Lilligant</a></li>
+            <li><a href="/us/pokedex/basculin">550 - Basculin</a></li>
+            <li><a href="/us/pokedex/sandile">551 - Sandile</a></li>
+            <li><a href="/us/pokedex/krokorok">552 - Krokorok</a></li>
+            <li><a href="/us/pokedex/krookodile">553 - Krookodile</a></li>
+            <li><a href="/us/pokedex/darumaka">554 - Darumaka</a></li>
+            <li><a href="/us/pokedex/darmanitan">555 - Darmanitan</a></li>
+            <li><a href="/us/pokedex/maractus">556 - Maractus</a></li>
+            <li><a href="/us/pokedex/dwebble">557 - Dwebble</a></li>
+            <li><a href="/us/pokedex/crustle">558 - Crustle</a></li>
+            <li><a href="/us/pokedex/scraggy">559 - Scraggy</a></li>
+            <li><a href="/us/pokedex/scrafty">560 - Scrafty</a></li>
+            <li><a href="/us/pokedex/sigilyph">561 - Sigilyph</a></li>
+            <li><a href="/us/pokedex/yamask">562 - Yamask</a></li>
+            <li><a href="/us/pokedex/cofagrigus">563 - Cofagrigus</a></li>
+            <li><a href="/us/pokedex/tirtouga">564 - Tirtouga</a></li>
+            <li><a href="/us/pokedex/carracosta">565 - Carracosta</a></li>
+            <li><a href="/us/pokedex/archen">566 - Archen</a></li>
+            <li><a href="/us/pokedex/archeops">567 - Archeops</a></li>
+            <li><a href="/us/pokedex/trubbish">568 - Trubbish</a></li>
+            <li><a href="/us/pokedex/garbodor">569 - Garbodor</a></li>
+            <li><a href="/us/pokedex/zorua">570 - Zorua</a></li>
+            <li><a href="/us/pokedex/zoroark">571 - Zoroark</a></li>
+            <li><a href="/us/pokedex/minccino">572 - Minccino</a></li>
+            <li><a href="/us/pokedex/cinccino">573 - Cinccino</a></li>
+            <li><a href="/us/pokedex/gothita">574 - Gothita</a></li>
+            <li><a href="/us/pokedex/gothorita">575 - Gothorita</a></li>
+            <li><a href="/us/pokedex/gothitelle">576 - Gothitelle</a></li>
+            <li><a href="/us/pokedex/solosis">577 - Solosis</a></li>
+            <li><a href="/us/pokedex/duosion">578 - Duosion</a></li>
+            <li><a href="/us/pokedex/reuniclus">579 - Reuniclus</a></li>
+            <li><a href="/us/pokedex/ducklett">580 - Ducklett</a></li>
+            <li><a href="/us/pokedex/swanna">581 - Swanna</a></li>
+            <li><a href="/us/pokedex/vanillite">582 - Vanillite</a></li>
+            <li><a href="/us/pokedex/vanillish">583 - Vanillish</a></li>
+            <li><a href="/us/pokedex/vanilluxe">584 - Vanilluxe</a></li>
+            <li><a href="/us/pokedex/deerling">585 - Deerling</a></li>
+            <li><a href="/us/pokedex/sawsbuck">586 - Sawsbuck</a></li>
+            <li><a href="/us/pokedex/emolga">587 - Emolga</a></li>
+            <li><a href="/us/pokedex/karrablast">588 - Karrablast</a></li>
+            <li><a href="/us/pokedex/escavalier">589 - Escavalier</a></li>
+            <li><a href="/us/pokedex/foongus">590 - Foongus</a></li>
+            <li><a href="/us/pokedex/amoonguss">591 - Amoonguss</a></li>
+            <li><a href="/us/pokedex/frillish">592 - Frillish</a></li>
+            <li><a href="/us/pokedex/jellicent">593 - Jellicent</a></li>
+            <li><a href="/us/pokedex/alomomola">594 - Alomomola</a></li>
+            <li><a href="/us/pokedex/joltik">595 - Joltik</a></li>
+            <li><a href="/us/pokedex/galvantula">596 - Galvantula</a></li>
+            <li><a href="/us/pokedex/ferroseed">597 - Ferroseed</a></li>
+            <li><a href="/us/pokedex/ferrothorn">598 - Ferrothorn</a></li>
+            <li><a href="/us/pokedex/klink">599 - Klink</a></li>
+            <li><a href="/us/pokedex/klang">600 - Klang</a></li>
+            <li><a href="/us/pokedex/klinklang">601 - Klinklang</a></li>
+            <li><a href="/us/pokedex/tynamo">602 - Tynamo</a></li>
+            <li><a href="/us/pokedex/eelektrik">603 - Eelektrik</a></li>
+            <li><a href="/us/pokedex/eelektross">604 - Eelektross</a></li>
+            <li><a href="/us/pokedex/elgyem">605 - Elgyem</a></li>
+            <li><a href="/us/pokedex/beheeyem">606 - Beheeyem</a></li>
+            <li><a href="/us/pokedex/litwick">607 - Litwick</a></li>
+            <li><a href="/us/pokedex/lampent">608 - Lampent</a></li>
+            <li><a href="/us/pokedex/chandelure">609 - Chandelure</a></li>
+            <li><a href="/us/pokedex/axew">610 - Axew</a></li>
+            <li><a href="/us/pokedex/fraxure">611 - Fraxure</a></li>
+            <li><a href="/us/pokedex/haxorus">612 - Haxorus</a></li>
+            <li><a href="/us/pokedex/cubchoo">613 - Cubchoo</a></li>
+            <li><a href="/us/pokedex/beartic">614 - Beartic</a></li>
+            <li><a href="/us/pokedex/cryogonal">615 - Cryogonal</a></li>
+            <li><a href="/us/pokedex/shelmet">616 - Shelmet</a></li>
+            <li><a href="/us/pokedex/accelgor">617 - Accelgor</a></li>
+            <li><a href="/us/pokedex/stunfisk">618 - Stunfisk</a></li>
+            <li><a href="/us/pokedex/mienfoo">619 - Mienfoo</a></li>
+            <li><a href="/us/pokedex/mienshao">620 - Mienshao</a></li>
+            <li><a href="/us/pokedex/druddigon">621 - Druddigon</a></li>
+            <li><a href="/us/pokedex/golett">622 - Golett</a></li>
+            <li><a href="/us/pokedex/golurk">623 - Golurk</a></li>
+            <li><a href="/us/pokedex/pawniard">624 - Pawniard</a></li>
+            <li><a href="/us/pokedex/bisharp">625 - Bisharp</a></li>
+            <li><a href="/us/pokedex/bouffalant">626 - Bouffalant</a></li>
+            <li><a href="/us/pokedex/rufflet">627 - Rufflet</a></li>
+            <li><a href="/us/pokedex/braviary">628 - Braviary</a></li>
+            <li><a href="/us/pokedex/vullaby">629 - Vullaby</a></li>
+            <li><a href="/us/pokedex/mandibuzz">630 - Mandibuzz</a></li>
+            <li><a href="/us/pokedex/heatmor">631 - Heatmor</a></li>
+            <li><a href="/us/pokedex/durant">632 - Durant</a></li>
+            <li><a href="/us/pokedex/deino">633 - Deino</a></li>
+            <li><a href="/us/pokedex/zweilous">634 - Zweilous</a></li>
+            <li><a href="/us/pokedex/hydreigon">635 - Hydreigon</a></li>
+            <li><a href="/us/pokedex/larvesta">636 - Larvesta</a></li>
+            <li><a href="/us/pokedex/volcarona">637 - Volcarona</a></li>
+            <li><a href="/us/pokedex/cobalion">638 - Cobalion</a></li>
+            <li><a href="/us/pokedex/terrakion">639 - Terrakion</a></li>
+            <li><a href="/us/pokedex/virizion">640 - Virizion</a></li>
+            <li><a href="/us/pokedex/tornadus">641 - Tornadus</a></li>
+            <li><a href="/us/pokedex/thundurus">642 - Thundurus</a></li>
+            <li><a href="/us/pokedex/reshiram">643 - Reshiram</a></li>
+            <li><a href="/us/pokedex/zekrom">644 - Zekrom</a></li>
+            <li><a href="/us/pokedex/landorus">645 - Landorus</a></li>
+            <li><a href="/us/pokedex/kyurem">646 - Kyurem</a></li>
+            <li><a href="/us/pokedex/keldeo">647 - Keldeo</a></li>
+            <li><a href="/us/pokedex/meloetta">648 - Meloetta</a></li>
+            <li><a href="/us/pokedex/genesect">649 - Genesect</a></li>
+            <li><a href="/us/pokedex/chespin">650 - Chespin</a></li>
+            <li><a href="/us/pokedex/quilladin">651 - Quilladin</a></li>
+            <li><a href="/us/pokedex/chesnaught">652 - Chesnaught</a></li>
+            <li><a href="/us/pokedex/fennekin">653 - Fennekin</a></li>
+            <li><a href="/us/pokedex/braixen">654 - Braixen</a></li>
+            <li><a href="/us/pokedex/delphox">655 - Delphox</a></li>
+            <li><a href="/us/pokedex/froakie">656 - Froakie</a></li>
+            <li><a href="/us/pokedex/frogadier">657 - Frogadier</a></li>
+            <li><a href="/us/pokedex/greninja">658 - Greninja</a></li>
+            <li><a href="/us/pokedex/bunnelby">659 - Bunnelby</a></li>
+            <li><a href="/us/pokedex/diggersby">660 - Diggersby</a></li>
+            <li><a href="/us/pokedex/fletchling">661 - Fletchling</a></li>
+            <li><a href="/us/pokedex/fletchinder">662 - Fletchinder</a></li>
+            <li><a href="/us/pokedex/talonflame">663 - Talonflame</a></li>
+            <li><a href="/us/pokedex/scatterbug">664 - Scatterbug</a></li>
+            <li><a href="/us/pokedex/spewpa">665 - Spewpa</a></li>
+            <li><a href="/us/pokedex/vivillon">666 - Vivillon</a></li>
+            <li><a href="/us/pokedex/litleo">667 - Litleo</a></li>
+            <li><a href="/us/pokedex/pyroar">668 - Pyroar</a></li>
+            <li><a href="/us/pokedex/flabebe">669 - Flabébé</a></li>
+            <li><a href="/us/pokedex/floette">670 - Floette</a></li>
+            <li><a href="/us/pokedex/florges">671 - Florges</a></li>
+            <li><a href="/us/pokedex/skiddo">672 - Skiddo</a></li>
+            <li><a href="/us/pokedex/gogoat">673 - Gogoat</a></li>
+            <li><a href="/us/pokedex/pancham">674 - Pancham</a></li>
+            <li><a href="/us/pokedex/pangoro">675 - Pangoro</a></li>
+            <li><a href="/us/pokedex/furfrou">676 - Furfrou</a></li>
+            <li><a href="/us/pokedex/espurr">677 - Espurr</a></li>
+            <li><a href="/us/pokedex/meowstic">678 - Meowstic</a></li>
+            <li><a href="/us/pokedex/honedge">679 - Honedge</a></li>
+            <li><a href="/us/pokedex/doublade">680 - Doublade</a></li>
+            <li><a href="/us/pokedex/aegislash">681 - Aegislash</a></li>
+            <li><a href="/us/pokedex/spritzee">682 - Spritzee</a></li>
+            <li><a href="/us/pokedex/aromatisse">683 - Aromatisse</a></li>
+            <li><a href="/us/pokedex/swirlix">684 - Swirlix</a></li>
+            <li><a href="/us/pokedex/slurpuff">685 - Slurpuff</a></li>
+            <li><a href="/us/pokedex/inkay">686 - Inkay</a></li>
+            <li><a href="/us/pokedex/malamar">687 - Malamar</a></li>
+            <li><a href="/us/pokedex/binacle">688 - Binacle</a></li>
+            <li><a href="/us/pokedex/barbaracle">689 - Barbaracle</a></li>
+            <li><a href="/us/pokedex/skrelp">690 - Skrelp</a></li>
+            <li><a href="/us/pokedex/dragalge">691 - Dragalge</a></li>
+            <li><a href="/us/pokedex/clauncher">692 - Clauncher</a></li>
+            <li><a href="/us/pokedex/clawitzer">693 - Clawitzer</a></li>
+            <li><a href="/us/pokedex/helioptile">694 - Helioptile</a></li>
+            <li><a href="/us/pokedex/heliolisk">695 - Heliolisk</a></li>
+            <li><a href="/us/pokedex/tyrunt">696 - Tyrunt</a></li>
+            <li><a href="/us/pokedex/tyrantrum">697 - Tyrantrum</a></li>
+            <li><a href="/us/pokedex/amaura">698 - Amaura</a></li>
+            <li><a href="/us/pokedex/aurorus">699 - Aurorus</a></li>
+            <li><a href="/us/pokedex/sylveon">700 - Sylveon</a></li>
+            <li><a href="/us/pokedex/hawlucha">701 - Hawlucha</a></li>
+            <li><a href="/us/pokedex/dedenne">702 - Dedenne</a></li>
+            <li><a href="/us/pokedex/carbink">703 - Carbink</a></li>
+            <li><a href="/us/pokedex/goomy">704 - Goomy</a></li>
+            <li><a href="/us/pokedex/sliggoo">705 - Sliggoo</a></li>
+            <li><a href="/us/pokedex/goodra">706 - Goodra</a></li>
+            <li><a href="/us/pokedex/klefki">707 - Klefki</a></li>
+            <li><a href="/us/pokedex/phantump">708 - Phantump</a></li>
+            <li><a href="/us/pokedex/trevenant">709 - Trevenant</a></li>
+            <li><a href="/us/pokedex/pumpkaboo">710 - Pumpkaboo</a></li>
+            <li><a href="/us/pokedex/gourgeist">711 - Gourgeist</a></li>
+            <li><a href="/us/pokedex/bergmite">712 - Bergmite</a></li>
+            <li><a href="/us/pokedex/avalugg">713 - Avalugg</a></li>
+            <li><a href="/us/pokedex/noibat">714 - Noibat</a></li>
+            <li><a href="/us/pokedex/noivern">715 - Noivern</a></li>
+            <li><a href="/us/pokedex/xerneas">716 - Xerneas</a></li>
+            <li><a href="/us/pokedex/yveltal">717 - Yveltal</a></li>
+            <li><a href="/us/pokedex/zygarde">718 - Zygarde</a></li>
+            <li><a href="/us/pokedex/diancie">719 - Diancie</a></li>
+            <li><a href="/us/pokedex/hoopa">720 - Hoopa</a></li>
+            <li><a href="/us/pokedex/volcanion">721 - Volcanion</a></li>
+            <li><a href="/us/pokedex/rowlet">722 - Rowlet</a></li>
+            <li><a href="/us/pokedex/dartrix">723 - Dartrix</a></li>
+            <li><a href="/us/pokedex/decidueye">724 - Decidueye</a></li>
+            <li><a href="/us/pokedex/litten">725 - Litten</a></li>
+            <li><a href="/us/pokedex/torracat">726 - Torracat</a></li>
+            <li><a href="/us/pokedex/incineroar">727 - Incineroar</a></li>
+            <li><a href="/us/pokedex/popplio">728 - Popplio</a></li>
+            <li><a href="/us/pokedex/brionne">729 - Brionne</a></li>
+            <li><a href="/us/pokedex/primarina">730 - Primarina</a></li>
+            <li><a href="/us/pokedex/pikipek">731 - Pikipek</a></li>
+            <li><a href="/us/pokedex/trumbeak">732 - Trumbeak</a></li>
+            <li><a href="/us/pokedex/toucannon">733 - Toucannon</a></li>
+            <li><a href="/us/pokedex/yungoos">734 - Yungoos</a></li>
+            <li><a href="/us/pokedex/gumshoos">735 - Gumshoos</a></li>
+            <li><a href="/us/pokedex/grubbin">736 - Grubbin</a></li>
+            <li><a href="/us/pokedex/charjabug">737 - Charjabug</a></li>
+            <li><a href="/us/pokedex/vikavolt">738 - Vikavolt</a></li>
+            <li><a href="/us/pokedex/crabrawler">739 - Crabrawler</a></li>
+            <li><a href="/us/pokedex/crabominable">740 - Crabominable</a></li>
+            <li><a href="/us/pokedex/oricorio">741 - Oricorio</a></li>
+            <li><a href="/us/pokedex/cutiefly">742 - Cutiefly</a></li>
+            <li><a href="/us/pokedex/ribombee">743 - Ribombee</a></li>
+            <li><a href="/us/pokedex/rockruff">744 - Rockruff</a></li>
+            <li><a href="/us/pokedex/lycanroc">745 - Lycanroc</a></li>
+            <li><a href="/us/pokedex/wishiwashi">746 - Wishiwashi</a></li>
+            <li><a href="/us/pokedex/mareanie">747 - Mareanie</a></li>
+            <li><a href="/us/pokedex/toxapex">748 - Toxapex</a></li>
+            <li><a href="/us/pokedex/mudbray">749 - Mudbray</a></li>
+            <li><a href="/us/pokedex/mudsdale">750 - Mudsdale</a></li>
+            <li><a href="/us/pokedex/dewpider">751 - Dewpider</a></li>
+            <li><a href="/us/pokedex/araquanid">752 - Araquanid</a></li>
+            <li><a href="/us/pokedex/fomantis">753 - Fomantis</a></li>
+            <li><a href="/us/pokedex/lurantis">754 - Lurantis</a></li>
+            <li><a href="/us/pokedex/morelull">755 - Morelull</a></li>
+            <li><a href="/us/pokedex/shiinotic">756 - Shiinotic</a></li>
+            <li><a href="/us/pokedex/salandit">757 - Salandit</a></li>
+            <li><a href="/us/pokedex/salazzle">758 - Salazzle</a></li>
+            <li><a href="/us/pokedex/stufful">759 - Stufful</a></li>
+            <li><a href="/us/pokedex/bewear">760 - Bewear</a></li>
+            <li><a href="/us/pokedex/bounsweet">761 - Bounsweet</a></li>
+            <li><a href="/us/pokedex/steenee">762 - Steenee</a></li>
+            <li><a href="/us/pokedex/tsareena">763 - Tsareena</a></li>
+            <li><a href="/us/pokedex/comfey">764 - Comfey</a></li>
+            <li><a href="/us/pokedex/oranguru">765 - Oranguru</a></li>
+            <li><a href="/us/pokedex/passimian">766 - Passimian</a></li>
+            <li><a href="/us/pokedex/wimpod">767 - Wimpod</a></li>
+            <li><a href="/us/pokedex/golisopod">768 - Golisopod</a></li>
+            <li><a href="/us/pokedex/sandygast">769 - Sandygast</a></li>
+            <li><a href="/us/pokedex/palossand">770 - Palossand</a></li>
+            <li><a href="/us/pokedex/pyukumuku">771 - Pyukumuku</a></li>
+            <li><a href="/us/pokedex/type-null">772 - Type: Null</a></li>
+            <li><a href="/us/pokedex/silvally">773 - Silvally</a></li>
+            <li><a href="/us/pokedex/minior">774 - Minior</a></li>
+            <li><a href="/us/pokedex/komala">775 - Komala</a></li>
+            <li><a href="/us/pokedex/turtonator">776 - Turtonator</a></li>
+            <li><a href="/us/pokedex/togedemaru">777 - Togedemaru</a></li>
+            <li><a href="/us/pokedex/mimikyu">778 - Mimikyu</a></li>
+            <li><a href="/us/pokedex/bruxish">779 - Bruxish</a></li>
+            <li><a href="/us/pokedex/drampa">780 - Drampa</a></li>
+            <li><a href="/us/pokedex/dhelmise">781 - Dhelmise</a></li>
+            <li><a href="/us/pokedex/jangmo-o">782 - Jangmo-o</a></li>
+            <li><a href="/us/pokedex/hakamo-o">783 - Hakamo-o</a></li>
+            <li><a href="/us/pokedex/kommo-o">784 - Kommo-o</a></li>
+            <li><a href="/us/pokedex/tapu-koko">785 - Tapu Koko</a></li>
+            <li><a href="/us/pokedex/tapu-lele">786 - Tapu Lele</a></li>
+            <li><a href="/us/pokedex/tapu-bulu">787 - Tapu Bulu</a></li>
+            <li><a href="/us/pokedex/tapu-fini">788 - Tapu Fini</a></li>
+            <li><a href="/us/pokedex/cosmog">789 - Cosmog</a></li>
+            <li><a href="/us/pokedex/cosmoem">790 - Cosmoem</a></li>
+            <li><a href="/us/pokedex/solgaleo">791 - Solgaleo</a></li>
+            <li><a href="/us/pokedex/lunala">792 - Lunala</a></li>
+            <li><a href="/us/pokedex/nihilego">793 - Nihilego</a></li>
+            <li><a href="/us/pokedex/buzzwole">794 - Buzzwole</a></li>
+            <li><a href="/us/pokedex/pheromosa">795 - Pheromosa</a></li>
+            <li><a href="/us/pokedex/xurkitree">796 - Xurkitree</a></li>
+            <li><a href="/us/pokedex/celesteela">797 - Celesteela</a></li>
+            <li><a href="/us/pokedex/kartana">798 - Kartana</a></li>
+            <li><a href="/us/pokedex/guzzlord">799 - Guzzlord</a></li>
+            <li><a href="/us/pokedex/necrozma">800 - Necrozma</a></li>
+            <li><a href="/us/pokedex/magearna">801 - Magearna</a></li>
+            <li><a href="/us/pokedex/marshadow">802 - Marshadow</a></li>
+            <li><a href="/us/pokedex/poipole">803 - Poipole</a></li>
+            <li><a href="/us/pokedex/naganadel">804 - Naganadel</a></li>
+            <li><a href="/us/pokedex/stakataka">805 - Stakataka</a></li>
+            <li><a href="/us/pokedex/blacephalon">806 - Blacephalon</a></li>
+            <li><a href="/us/pokedex/zeraora">807 - Zeraora</a></li>
+            <li><a href="/us/pokedex/meltan">808 - Meltan</a></li>
+            <li><a href="/us/pokedex/melmetal">809 - Melmetal</a></li>
+            <li><a href="/us/pokedex/grookey">810 - Grookey</a></li>
+            <li><a href="/us/pokedex/thwackey">811 - Thwackey</a></li>
+            <li><a href="/us/pokedex/rillaboom">812 - Rillaboom</a></li>
+            <li><a href="/us/pokedex/scorbunny">813 - Scorbunny</a></li>
+            <li><a href="/us/pokedex/raboot">814 - Raboot</a></li>
+            <li><a href="/us/pokedex/cinderace">815 - Cinderace</a></li>
+            <li><a href="/us/pokedex/sobble">816 - Sobble</a></li>
+            <li><a href="/us/pokedex/drizzile">817 - Drizzile</a></li>
+            <li><a href="/us/pokedex/inteleon">818 - Inteleon</a></li>
+            <li><a href="/us/pokedex/skwovet">819 - Skwovet</a></li>
+            <li><a href="/us/pokedex/greedent">820 - Greedent</a></li>
+            <li><a href="/us/pokedex/rookidee">821 - Rookidee</a></li>
+            <li><a href="/us/pokedex/corvisquire">822 - Corvisquire</a></li>
+            <li><a href="/us/pokedex/corviknight">823 - Corviknight</a></li>
+            <li><a href="/us/pokedex/blipbug">824 - Blipbug</a></li>
+            <li><a href="/us/pokedex/dottler">825 - Dottler</a></li>
+            <li><a href="/us/pokedex/orbeetle">826 - Orbeetle</a></li>
+            <li><a href="/us/pokedex/nickit">827 - Nickit</a></li>
+            <li><a href="/us/pokedex/thievul">828 - Thievul</a></li>
+            <li><a href="/us/pokedex/gossifleur">829 - Gossifleur</a></li>
+            <li><a href="/us/pokedex/eldegoss">830 - Eldegoss</a></li>
+            <li><a href="/us/pokedex/wooloo">831 - Wooloo</a></li>
+            <li><a href="/us/pokedex/dubwool">832 - Dubwool</a></li>
+            <li><a href="/us/pokedex/chewtle">833 - Chewtle</a></li>
+            <li><a href="/us/pokedex/drednaw">834 - Drednaw</a></li>
+            <li><a href="/us/pokedex/yamper">835 - Yamper</a></li>
+            <li><a href="/us/pokedex/boltund">836 - Boltund</a></li>
+            <li><a href="/us/pokedex/rolycoly">837 - Rolycoly</a></li>
+            <li><a href="/us/pokedex/carkol">838 - Carkol</a></li>
+            <li><a href="/us/pokedex/coalossal">839 - Coalossal</a></li>
+            <li><a href="/us/pokedex/applin">840 - Applin</a></li>
+            <li><a href="/us/pokedex/flapple">841 - Flapple</a></li>
+            <li><a href="/us/pokedex/appletun">842 - Appletun</a></li>
+            <li><a href="/us/pokedex/silicobra">843 - Silicobra</a></li>
+            <li><a href="/us/pokedex/sandaconda">844 - Sandaconda</a></li>
+            <li><a href="/us/pokedex/cramorant">845 - Cramorant</a></li>
+            <li><a href="/us/pokedex/arrokuda">846 - Arrokuda</a></li>
+            <li><a href="/us/pokedex/barraskewda">847 - Barraskewda</a></li>
+            <li><a href="/us/pokedex/toxel">848 - Toxel</a></li>
+            <li><a href="/us/pokedex/toxtricity">849 - Toxtricity</a></li>
+            <li><a href="/us/pokedex/sizzlipede">850 - Sizzlipede</a></li>
+            <li><a href="/us/pokedex/centiskorch">851 - Centiskorch</a></li>
+            <li><a href="/us/pokedex/clobbopus">852 - Clobbopus</a></li>
+            <li><a href="/us/pokedex/grapploct">853 - Grapploct</a></li>
+            <li><a href="/us/pokedex/sinistea">854 - Sinistea</a></li>
+            <li><a href="/us/pokedex/polteageist">855 - Polteageist</a></li>
+            <li><a href="/us/pokedex/hatenna">856 - Hatenna</a></li>
+            <li><a href="/us/pokedex/hattrem">857 - Hattrem</a></li>
+            <li><a href="/us/pokedex/hatterene">858 - Hatterene</a></li>
+            <li><a href="/us/pokedex/impidimp">859 - Impidimp</a></li>
+            <li><a href="/us/pokedex/morgrem">860 - Morgrem</a></li>
+            <li><a href="/us/pokedex/grimmsnarl">861 - Grimmsnarl</a></li>
+            <li><a href="/us/pokedex/obstagoon">862 - Obstagoon</a></li>
+            <li><a href="/us/pokedex/perrserker">863 - Perrserker</a></li>
+            <li><a href="/us/pokedex/cursola">864 - Cursola</a></li>
+            <li><a href="/us/pokedex/sirfetchd">865 - Sirfetch’d</a></li>
+            <li><a href="/us/pokedex/mr-rime">866 - Mr. Rime</a></li>
+            <li><a href="/us/pokedex/runerigus">867 - Runerigus</a></li>
+            <li><a href="/us/pokedex/milcery">868 - Milcery</a></li>
+            <li><a href="/us/pokedex/alcremie">869 - Alcremie</a></li>
+            <li><a href="/us/pokedex/falinks">870 - Falinks</a></li>
+            <li><a href="/us/pokedex/pincurchin">871 - Pincurchin</a></li>
+            <li><a href="/us/pokedex/snom">872 - Snom</a></li>
+            <li><a href="/us/pokedex/frosmoth">873 - Frosmoth</a></li>
+            <li><a href="/us/pokedex/stonjourner">874 - Stonjourner</a></li>
+            <li><a href="/us/pokedex/eiscue">875 - Eiscue</a></li>
+            <li><a href="/us/pokedex/indeedee">876 - Indeedee</a></li>
+            <li><a href="/us/pokedex/morpeko">877 - Morpeko</a></li>
+            <li><a href="/us/pokedex/cufant">878 - Cufant</a></li>
+            <li><a href="/us/pokedex/copperajah">879 - Copperajah</a></li>
+            <li><a href="/us/pokedex/dracozolt">880 - Dracozolt</a></li>
+            <li><a href="/us/pokedex/arctozolt">881 - Arctozolt</a></li>
+            <li><a href="/us/pokedex/dracovish">882 - Dracovish</a></li>
+            <li><a href="/us/pokedex/arctovish">883 - Arctovish</a></li>
+            <li><a href="/us/pokedex/duraludon">884 - Duraludon</a></li>
+            <li><a href="/us/pokedex/dreepy">885 - Dreepy</a></li>
+            <li><a href="/us/pokedex/drakloak">886 - Drakloak</a></li>
+            <li><a href="/us/pokedex/dragapult">887 - Dragapult</a></li>
+            <li><a href="/us/pokedex/zacian">888 - Zacian</a></li>
+            <li><a href="/us/pokedex/zamazenta">889 - Zamazenta</a></li>
+            <li><a href="/us/pokedex/eternatus">890 - Eternatus</a></li>
+            <li><a href="/us/pokedex/kubfu">891 - Kubfu</a></li>
+            <li><a href="/us/pokedex/urshifu">892 - Urshifu</a></li>
+            <li><a href="/us/pokedex/zarude">893 - Zarude</a></li>
+            <li><a href="/us/pokedex/regieleki">894 - Regieleki</a></li>
+            <li><a href="/us/pokedex/regidrago">895 - Regidrago</a></li>
+            <li><a href="/us/pokedex/glastrier">896 - Glastrier</a></li>
+            <li><a href="/us/pokedex/spectrier">897 - Spectrier</a></li>
+            <li><a href="/us/pokedex/calyrex">898 - Calyrex</a></li>
+            <li><a href="/us/pokedex/wyrdeer">899 - Wyrdeer</a></li>
+            <li><a href="/us/pokedex/kleavor">900 - Kleavor</a></li>
+            <li><a href="/us/pokedex/ursaluna">901 - Ursaluna</a></li>
+            <li><a href="/us/pokedex/basculegion">902 - Basculegion</a></li>
+            <li><a href="/us/pokedex/sneasler">903 - Sneasler</a></li>
+            <li><a href="/us/pokedex/overqwil">904 - Overqwil</a></li>
+            <li><a href="/us/pokedex/enamorus">905 - Enamorus</a></li>
+            <li><a href="/us/pokedex/sprigatito">906 - Sprigatito</a></li>
+            <li><a href="/us/pokedex/floragato">907 - Floragato</a></li>
+            <li><a href="/us/pokedex/meowscarada">908 - Meowscarada</a></li>
+            <li><a href="/us/pokedex/fuecoco">909 - Fuecoco</a></li>
+            <li><a href="/us/pokedex/crocalor">910 - Crocalor</a></li>
+            <li><a href="/us/pokedex/skeledirge">911 - Skeledirge</a></li>
+            <li><a href="/us/pokedex/quaxly">912 - Quaxly</a></li>
+            <li><a href="/us/pokedex/quaxwell">913 - Quaxwell</a></li>
+            <li><a href="/us/pokedex/quaquaval">914 - Quaquaval</a></li>
+            <li><a href="/us/pokedex/lechonk">915 - Lechonk</a></li>
+            <li><a href="/us/pokedex/oinkologne">916 - Oinkologne</a></li>
+            <li><a href="/us/pokedex/tarountula">917 - Tarountula</a></li>
+            <li><a href="/us/pokedex/spidops">918 - Spidops</a></li>
+            <li><a href="/us/pokedex/nymble">919 - Nymble</a></li>
+            <li><a href="/us/pokedex/lokix">920 - Lokix</a></li>
+            <li><a href="/us/pokedex/pawmi">921 - Pawmi</a></li>
+            <li><a href="/us/pokedex/pawmo">922 - Pawmo</a></li>
+            <li><a href="/us/pokedex/pawmot">923 - Pawmot</a></li>
+            <li><a href="/us/pokedex/tandemaus">924 - Tandemaus</a></li>
+            <li><a href="/us/pokedex/maushold">925 - Maushold</a></li>
+            <li><a href="/us/pokedex/fidough">926 - Fidough</a></li>
+            <li><a href="/us/pokedex/dachsbun">927 - Dachsbun</a></li>
+            <li><a href="/us/pokedex/smoliv">928 - Smoliv</a></li>
+            <li><a href="/us/pokedex/dolliv">929 - Dolliv</a></li>
+            <li><a href="/us/pokedex/arboliva">930 - Arboliva</a></li>
+            <li><a href="/us/pokedex/squawkabilly">931 - Squawkabilly</a></li>
+            <li><a href="/us/pokedex/nacli">932 - Nacli</a></li>
+            <li><a href="/us/pokedex/naclstack">933 - Naclstack</a></li>
+            <li><a href="/us/pokedex/garganacl">934 - Garganacl</a></li>
+            <li><a href="/us/pokedex/charcadet">935 - Charcadet</a></li>
+            <li><a href="/us/pokedex/armarouge">936 - Armarouge</a></li>
+            <li><a href="/us/pokedex/ceruledge">937 - Ceruledge</a></li>
+            <li><a href="/us/pokedex/tadbulb">938 - Tadbulb</a></li>
+            <li><a href="/us/pokedex/bellibolt">939 - Bellibolt</a></li>
+            <li><a href="/us/pokedex/wattrel">940 - Wattrel</a></li>
+            <li><a href="/us/pokedex/kilowattrel">941 - Kilowattrel</a></li>
+            <li><a href="/us/pokedex/maschiff">942 - Maschiff</a></li>
+            <li><a href="/us/pokedex/mabosstiff">943 - Mabosstiff</a></li>
+            <li><a href="/us/pokedex/shroodle">944 - Shroodle</a></li>
+            <li><a href="/us/pokedex/grafaiai">945 - Grafaiai</a></li>
+            <li><a href="/us/pokedex/bramblin">946 - Bramblin</a></li>
+            <li><a href="/us/pokedex/brambleghast">947 - Brambleghast</a></li>
+            <li><a href="/us/pokedex/toedscool">948 - Toedscool</a></li>
+            <li><a href="/us/pokedex/toedscruel">949 - Toedscruel</a></li>
+            <li><a href="/us/pokedex/klawf">950 - Klawf</a></li>
+            <li><a href="/us/pokedex/capsakid">951 - Capsakid</a></li>
+            <li><a href="/us/pokedex/scovillain">952 - Scovillain</a></li>
+            <li><a href="/us/pokedex/rellor">953 - Rellor</a></li>
+            <li><a href="/us/pokedex/rabsca">954 - Rabsca</a></li>
+            <li><a href="/us/pokedex/flittle">955 - Flittle</a></li>
+            <li><a href="/us/pokedex/espathra">956 - Espathra</a></li>
+            <li><a href="/us/pokedex/tinkatink">957 - Tinkatink</a></li>
+            <li><a href="/us/pokedex/tinkatuff">958 - Tinkatuff</a></li>
+            <li><a href="/us/pokedex/tinkaton">959 - Tinkaton</a></li>
+            <li><a href="/us/pokedex/wiglett">960 - Wiglett</a></li>
+            <li><a href="/us/pokedex/wugtrio">961 - Wugtrio</a></li>
+            <li><a href="/us/pokedex/bombirdier">962 - Bombirdier</a></li>
+            <li><a href="/us/pokedex/finizen">963 - Finizen</a></li>
+            <li><a href="/us/pokedex/palafin">964 - Palafin</a></li>
+            <li><a href="/us/pokedex/varoom">965 - Varoom</a></li>
+            <li><a href="/us/pokedex/revavroom">966 - Revavroom</a></li>
+            <li><a href="/us/pokedex/cyclizar">967 - Cyclizar</a></li>
+            <li><a href="/us/pokedex/orthworm">968 - Orthworm</a></li>
+            <li><a href="/us/pokedex/glimmet">969 - Glimmet</a></li>
+            <li><a href="/us/pokedex/glimmora">970 - Glimmora</a></li>
+            <li><a href="/us/pokedex/greavard">971 - Greavard</a></li>
+            <li><a href="/us/pokedex/houndstone">972 - Houndstone</a></li>
+            <li><a href="/us/pokedex/flamigo">973 - Flamigo</a></li>
+            <li><a href="/us/pokedex/cetoddle">974 - Cetoddle</a></li>
+            <li><a href="/us/pokedex/cetitan">975 - Cetitan</a></li>
+            <li><a href="/us/pokedex/veluza">976 - Veluza</a></li>
+            <li><a href="/us/pokedex/dondozo">977 - Dondozo</a></li>
+            <li><a href="/us/pokedex/tatsugiri">978 - Tatsugiri</a></li>
+            <li><a href="/us/pokedex/annihilape">979 - Annihilape</a></li>
+            <li><a href="/us/pokedex/clodsire">980 - Clodsire</a></li>
+            <li><a href="/us/pokedex/farigiraf">981 - Farigiraf</a></li>
+            <li><a href="/us/pokedex/dudunsparce">982 - Dudunsparce</a></li>
+            <li><a href="/us/pokedex/kingambit">983 - Kingambit</a></li>
+            <li><a href="/us/pokedex/great-tusk">984 - Great Tusk</a></li>
+            <li><a href="/us/pokedex/scream-tail">985 - Scream Tail</a></li>
+            <li><a href="/us/pokedex/brute-bonnet">986 - Brute Bonnet</a></li>
+            <li><a href="/us/pokedex/flutter-mane">987 - Flutter Mane</a></li>
+            <li><a href="/us/pokedex/slither-wing">988 - Slither Wing</a></li>
+            <li><a href="/us/pokedex/sandy-shocks">989 - Sandy Shocks</a></li>
+            <li><a href="/us/pokedex/iron-treads">990 - Iron Treads</a></li>
+            <li><a href="/us/pokedex/iron-bundle">991 - Iron Bundle</a></li>
+            <li><a href="/us/pokedex/iron-hands">992 - Iron Hands</a></li>
+            <li><a href="/us/pokedex/iron-jugulis">993 - Iron Jugulis</a></li>
+            <li><a href="/us/pokedex/iron-moth">994 - Iron Moth</a></li>
+            <li><a href="/us/pokedex/iron-thorns">995 - Iron Thorns</a></li>
+            <li><a href="/us/pokedex/frigibax">996 - Frigibax</a></li>
+            <li><a href="/us/pokedex/arctibax">997 - Arctibax</a></li>
+            <li><a href="/us/pokedex/baxcalibur">998 - Baxcalibur</a></li>
+            <li><a href="/us/pokedex/gimmighoul">999 - Gimmighoul</a></li>
+            <li><a href="/us/pokedex/gholdengo">1,000 - Gholdengo</a></li>
+            <li><a href="/us/pokedex/wo-chien">1,001 - Wo-Chien</a></li>
+            <li><a href="/us/pokedex/chien-pao">1,002 - Chien-Pao</a></li>
+            <li><a href="/us/pokedex/ting-lu">1,003 - Ting-Lu</a></li>
+            <li><a href="/us/pokedex/chi-yu">1,004 - Chi-Yu</a></li>
+            <li><a href="/us/pokedex/roaring-moon">1,005 - Roaring Moon</a></li>
+            <li><a href="/us/pokedex/iron-valiant">1,006 - Iron Valiant</a></li>
+            <li><a href="/us/pokedex/koraidon">1,007 - Koraidon</a></li>
+            <li><a href="/us/pokedex/miraidon">1,008 - Miraidon</a></li>
+            <li><a href="/us/pokedex/walking-wake">1,009 - Walking Wake</a></li>
+            <li><a href="/us/pokedex/iron-leaves">1,010 - Iron Leaves</a></li>
+            <li><a href="/us/pokedex/dipplin">1,011 - Dipplin</a></li>
+            <li><a href="/us/pokedex/poltchageist">1,012 - Poltchageist</a></li>
+            <li><a href="/us/pokedex/sinistcha">1,013 - Sinistcha</a></li>
+            <li><a href="/us/pokedex/okidogi">1,014 - Okidogi</a></li>
+            <li><a href="/us/pokedex/munkidori">1,015 - Munkidori</a></li>
+            <li><a href="/us/pokedex/fezandipiti">1,016 - Fezandipiti</a></li>
+            <li><a href="/us/pokedex/ogerpon">1,017 - Ogerpon</a></li>
+            <li><a href="/us/pokedex/archaludon">1,018 - Archaludon</a></li>
+            <li><a href="/us/pokedex/hydrapple">1,019 - Hydrapple</a></li>
+            <li><a href="/us/pokedex/gouging-fire">1,020 - Gouging Fire</a></li>
+            <li><a href="/us/pokedex/raging-bolt">1,021 - Raging Bolt</a></li>
+            <li><a href="/us/pokedex/iron-boulder">1,022 - Iron Boulder</a></li>
+            <li><a href="/us/pokedex/iron-crown">1,023 - Iron Crown</a></li>
+            <li><a href="/us/pokedex/terapagos">1,024 - Terapagos</a></li>
+            <li><a href="/us/pokedex/pecharunt">1,025 - Pecharunt</a></li>
+        </ul>
+    </noscript>
+</div>
+
+
+  <div id="back-to-top" class="visible-mobile">
+    <span class="offscreen">Back to Top</span>
+  </div>
+
+  <div class="footer-divider">
+    <span class="footer-notch"></span>
+  </div>
+
+  <footer class="global-footer">
+
+<div class="global-footer-email">
+    <p class="footer-email-title">Sign up for Pok&eacute;mon&nbsp;emails!</p>
+    <div class="footer-email-container disable-custom-select-menu">
+        <div class="footer-email-form">
+            <input type="email" name="email-signup-email-text" id="email-signup-email-text" placeholder="Email" class="footer-white-box" required />
+            <div class="region_dob_wrap">
+                <select id="email-signup-regions" class="footer-white-box footer-region-select" required>
+                </select>
+                <input type="text" class="footer-email-input footer-white-box" title="Birthday" id="email-signup-dob" placeholder="Birthday" />
+            </div>
+        </div>
+        <div class="footer-email-notification-options">
+            <p class="email_msg">I’d like to receive emails&nbsp;about:</p>
+            <div class="footer-email-checkbox-wrapper-1">
+                <input type="checkbox" id="email-signup-vg-apps" name="email-signup-vg-apps" value="pokemon_news" class="footer-email-checkbox">
+                <label for="email-signup-vg-apps"> Pokémon video games, apps, and&nbsp;more</label>
+            </div>
+            <div class="footer-email-checkbox-wrapper-1" id="email-signup-pc-container">
+                <input type="checkbox" id="email-signup-pc" name="email-signup-pc" value="pcenter" class="footer-email-checkbox">
+                <label for="email-signup-pc"> Pokémon Center (our official&nbsp;online shop)</label>
+            </div>
+            <div class="footer-email-checkbox-wrapper-1">
+                <input type="checkbox" id="email-signup-terms" name="email-signup-terms" value="terms" class="footer-email-checkbox">
+                <label for="email-signup-terms">
+                    I accept the Pokemon.com <a class="footer-email-link" href="/us/terms-of-use/">Terms of Use</a> and <a class="footer-email-link" href="/us/privacy-notice/">Privacy Notice</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <input type="submit" name="submit_button" value="SIGN UP" class="footer-email-sumbit" id="email-signup-submit-button"/>
+</div>    <div class="content-wrapper match-height-tablet">
+
+
+<div class="global-footer-links match">
+  <h2><span class="offscreen">The Pok&eacute;mon Company</span></h2>
+  <ul>
+        <li>
+          <a href="/us/pokemon-news/" rel="" title="">
+            News
+          </a>
+        </li>
+
+      <li>
+        <a href="/us/parents-guide/" rel="" title="">
+         Parents Guide
+        </a>
+      </li>
+
+      <li>
+        <a href="/us/customer-service/" rel="" title="">
+          Customer Service
+        </a>
+      </li>
+
+      <li>
+        <a href="https://corporate.pokemon.com/en-us/" rel="" title="" id="about-our-company-link">
+          About Our Company
+        </a>
+      </li>
+
+        <li>
+          <a id="careers-link" href="https://boards.greenhouse.io/pokemoncareers" class="exit-link"
+            target="_blank"
+            rel="https://boards.greenhouse.io/pokemoncareers"
+            title="External: https://boards.greenhouse.io/pokemoncareers">
+            Careers
+          </a>
+        </li>
+
+    <li>
+      <a href="/us/country-region/" rel="" title="">
+        Select a Country/Region
+        <i class="icon-us"></i>
+      </a>
+    </li>
+
+    <li>
+      <a id="press-link" href="https://press.pokemon.com/en" class="exit-link"
+        target="_blank"
+        rel="https://press.pokemon.com/en"
+        title="External: https://press.pokemon.com/en">
+        Press Site
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+<div class="global-footer-social match">
+
+    <div class="footer-social-wrapper">
+        <div class="find-us">
+            <div class="find-us-box">
+
+                <a href="https://www.facebook.com/pokemon" class="facebook exit-link" target="_blank"
+                   title="External: https://www.facebook.com/pokemon">
+                    <span class="offscreen">Facebook</span>
+                </a>
+
+                <a href="https://www.youtube.com/user/Pokemon" class="youtube exit-link" target="_blank"
+                   title="External: https://www.youtube.com/user/Pokemon">
+                    <span class="offscreen">Youtube</span>
+                </a>
+
+                <a href="https://www.twitter.com/pokemon" class="twitter exit-link" target="_blank"
+                   title="External: https://www.twitter.com/pokemon">
+                    <span class="offscreen">Twitter</span>
+                </a>
+
+                    <a href="https://www.instagram.com/pokemon" class="instagram exit-link" target="_blank"
+                       title="External: https://www.instagram.com/pokemon">
+                        <span class="offscreen">Instagram</span>
+                    </a>
+
+                    <a href="https://www.pinterest.com/pokemon" class="pinterest exit-link" target="_blank"
+                       title="External: https://www.pinterest.com/pokemon">
+                        <span class="offscreen">Pinterest</span>
+                    </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="global-footer-legal match">
+
+  <div class="footer-legal-wrapper">
+
+    <div id="footer--privacy">
+        <a
+            title="External: https://caru.bbbprograms.org/seal/Confirmation/1596150491"
+                class="exit-link" target="_blank"
+                href="https://caru.bbbprograms.org/seal/Confirmation/1596150491"
+            >
+        </a>
+
+      <ul>
+
+          <li>
+            <a href="/us/terms-of-use/">Terms of Use</a>
+          </li>
+
+          <li>
+            <a href="/us/privacy-notice/">Privacy Notice</a>
+          </li>
+
+          <li>
+            <a id="cookieLink" href="/us/cookie-page/">Cookie Page</a>
+          </li>
+
+          <li>
+            <a href="/us/legal/">Legal Info</a>
+          </li>
+
+            <li>
+              <a id="securityLink" href="/us/vulnerability-disclosure-program/">Security</a>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <span>©2023 Pokémon. ©1995 - 2023 Nintendo/Creatures Inc./GAME FREAK inc. TM, ®Nintendo.</span>
+
+  </div>
+
+</div>
+
+    </div>
+  </footer>
+
+
+  
+
+
+<div id="modal" class="popup">
+	<div class="externalLink">
+    <h6>
+
+      You are about to leave a site operated by The Pokémon Company International, Inc.
+
+    </h6>
+		<p>
+
+The Pokémon Company International is not responsible for the content of any linked website that is not operated by The Pokémon Company International. Please note that these websites' privacy policies and security practices may differ from The Pokémon Company International's standards.
+
+    </p>
+		<div class="buttons-wrapper">
+			<a href="#" class="button button-green arrow-right continueBtn">
+
+        Continue
+
+      </a>
+			<a href="#" class="button button-darkgray arrow-left closeBtn">
+
+        Cancel
+
+      </a>
+		</div>
+	</div>
+</div>
+
+<div id="pokemon-center-modal" class="popup">
+	<div class="externalLink centerLink">
+    <h6>
+      Click Continue to visit PokemonCenter.com, our official online shop.
+    </h6>
+    <h6>
+      The privacy and security policies differ.
+    </h6>
+		<div class="buttons-wrapper">
+			<a href="#" class="button button-green arrow-right continueBtn">
+
+        Continue
+
+      </a>
+			<a href="#" class="button button-darkgray arrow-left closeBtn" target="_blank">
+
+        Cancel
+
+      </a>
+		</div>
+	</div>
+</div>
+
+<div id="site-search-modal" class="popup">
+
+	<form id="site-search-widget" class="form-analytics" name="site-search-modal">
+		<span class="search"><input type="search" placeholder="Search" name="search" id="site-search-widget-term" autocomplete="off" /></span>
+		<span class="submit icon icon_search"><input type="submit" value="" id="site-search-widget-submit"/></span>
+        <div id="modal-search-results"></div>
+	</form>
+</div>
+
+<div id='report-screen-name-success-modal' class='popup'>
+  <h6>Report Inappropriate Screen Name</h6>
+
+  <div class='modalBox'>
+    <img src="https://assets.pokemon.com/static2/_ui/img/chrome/external_link_bumper.png" alt="" class="hidden-mobile" />
+
+    <p>
+    Pokemon.com administrators have been notified and will review the screen name for compliance with the Terms of Use.
+    </p>
+
+    <div class='buttons-wrapper'>
+      <a href='#' class='button button-orange closeBtn'>
+        Close
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id='report-screen-name-failure-modal' class='popup'>
+  <h6>Report Inappropriate Screen Name</h6>
+
+  <div class='modalBox'>
+    <img src="https://assets.pokemon.com/static2/_ui/img/chrome/external_link_bumper.png" alt="" class="hidden-mobile" />
+
+    <p>
+    Your request could not be completed. Please try again. If the problem persists, please contact Customer Support.
+    </p>
+
+    <div class='buttons-wrapper'>
+      <a href='#' class='button button-orange closeBtn'>
+        Close
+      </a>
+    </div>
+  </div>
+</div>
+
+    <div id="email-signup-success" class="email-modal-content popup" tabindex="0">
+        <div class="email-modal-close-icon-container">
+            <a tabindex="0" class="icon icon_multiply email-modal-close-icon closeBtn"></a>
+        </div>
+        <div class="email-modal-body modalBox">
+            <span class="icon icon_check email-modal-big-icon" style="color: green;"></span>
+            <p class="email-modal-emphasis-text">You have successfully signed up for Pokémon&nbsp;emails!</p>
+            <p>We'll send you a few emails every week.</p>
+            <p>Unsubscribe at any time using the link in your email's&nbsp;footer.</p>
+        </div>
+    </div>
+
+    <div id="email-signup-failure" class="email-modal-content popup" tabindex="0">
+        <div class="email-modal-close-icon-container">
+            <a tabindex="0" class="icon icon_multiply email-modal-close-icon closeBtn"></a>
+        </div>
+        <div class="email-modal-body modalBox">
+            <p class="email-modal-emphasis-text">We're sorry, but we can't process your request.</p>
+            <p>We can't sign you up for emails right&nbsp;now.</p>
+            <p>
+              You can visit <a href="/us/">pokemon.com</a> for the latest Pokémon news or contact Customer&nbsp;Support&nbsp;<a href="https://support.pokemon.com/hc/en-us/articles/20573695697428">here</a>.
+            </p>
+        </div>
+    </div>
+<div id='popupScreen' class="popupScreen"></div>
+
+
+  
+    
+<div id="video-modal" class="popup">
+<span class="watch-token-info"><span class="token_icon"></span><p class="token_verbal">You've been awarded <span class="token_amount">0</span> Token(s) for watching Pokémon TV!</p></span>
+    <div class="video-modal-wrapper">
+
+        <header class="video-header">
+            <h4 id="episodeInfo">
+
+            </h4>
+            <!-- HEADLINE -->
+            <h1 id="episodeTitle"></h1>
+        </header>
+
+        <div class="video-container">
+        </div>
+
+        <p class="legal" style="padding-top: 10px"></p>
+
+        <p class="video-summary">
+
+        </p>
+
+        
+
+        <a href="#" class="closeBtn button button-orange no-arrow right"><i class="icon icon_multiply"></i> Close</a>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    // define waitSeconds above require script tag
+    // to override the default, until main.js loads
+    window.requirejs = {
+        waitSeconds: 30 // when loaded, main.js also sets waitSeconds to 30
+    };
+</script>
+<script data-main="https://assets.pokemon.com/static2/_ui/js/pokedex.js"
+        src="https://assets.pokemon.com/static2/_ui/js/vendor/require.js"></script>
+
+<script type="text/javascript">
+if (typeof _satellite !== "undefined") {
+  _satellite.pageBottom();
+}
+</script>
+
+<script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1418142373" async></script></body>
+</html>
+

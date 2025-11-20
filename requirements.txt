@@ -1,0 +1,4 @@
+discord.py>=2.0.0
+sqlalchemy>=1.4.0
+tqdm>=4.60.0
+
